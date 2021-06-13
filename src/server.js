@@ -1,17 +1,20 @@
+require('dotenv').config();
 const express = require('express');
-const { apiRouter, dbRouter } = require('./routes');
+const { json } = require('express');
+const { PORT } = require('./config');
+const { apiRouter } = require('./routes');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
+
+app.use(json());
 
 // api routes
 app.use('/api', apiRouter);
 
-// main routes
-app.use('/', dbRouter);
+app.use(errorHandler);
 
-app.get('/', (req, res) => res.end(`<a href='/conf'>hello</a>`));
-
-const PORT = 3000;
+app.get('/', (req, res) => res.end('Hello!'));
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}...`);

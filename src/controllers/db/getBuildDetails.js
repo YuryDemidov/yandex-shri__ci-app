@@ -1,13 +1,6 @@
-const axios = require('axios');
+const { createDbRequest } = require('../../utils/createDbRequest');
 
-module.exports = () => {
-  // Example
-  axios
-    .get('https://shri.yandex/hw/api/conf', {
-      headers: {
-        Authorization: 'Bearer {AUTH TOKEN FROM .ENV}',
-      },
-    })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-};
+module.exports = (buildId) =>
+  createDbRequest(`/build/details?${buildId}`, {
+    method: 'get',
+  });
