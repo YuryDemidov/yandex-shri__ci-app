@@ -5,5 +5,5 @@ module.exports = async (req, res, next) => {
 
   const dbResponse = await getBuildDetails(buildId);
 
-  return res.json(dbResponse);
+  return res.json(dbResponse.data);
 };
