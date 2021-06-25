@@ -1,6 +1,6 @@
-const { createDbRequest } = require('../../utils/createDbRequest');
+import createDbRequest from '../../utils/createDbRequest';
 
-module.exports = (data) =>
+export default (data) =>
   createDbRequest('/conf', {
     method: 'post',
     data,

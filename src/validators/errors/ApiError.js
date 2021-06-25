@@ -1,4 +1,4 @@
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(status, message) {
     super(message);
 
@@ -10,20 +10,14 @@ class ApiError extends Error {
   }
 }
 
-class BadRequestApiError extends ApiError {
+export class BadRequestApiError extends ApiError {
   constructor(message = 'Bad Request') {
     super(400, message);
   }
 }
 
-class NotFoundApiError extends ApiError {
+export class NotFoundApiError extends ApiError {
   constructor(message = 'Not Found') {
     super(404, message);
   }
 }
-
-module.exports = {
-  ApiError,
-  BadRequestApiError,
-  NotFoundApiError,
-};

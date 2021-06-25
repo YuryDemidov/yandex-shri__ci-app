@@ -1,6 +1,6 @@
-const { spawn } = require('child_process');
+import { spawn } from 'child_process';
 
-module.exports = (repoName) => {
+export default (repoName) => {
   const gitCloneProcess = spawn('git', ['clone', repoName, 'src/repository']);
 
   gitCloneProcess.on('close', (code) => {

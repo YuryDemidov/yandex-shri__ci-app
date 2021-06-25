@@ -1,0 +1,27 @@
+.modal {
+  position: absolute;
+
+  animation: slide-in-down 0.5s;
+}
+
+.modal__content {
+  margin: 2rem;
+  padding: 2rem;
+
+  background-color: var(--alt-default-color);
+  border-radius: 0.4rem;
+  box-shadow:
+    0 0 0.1rem var(--shadow-color),
+    0 0.6rem 1.6rem var(--shadow-color);
+}
+
+.modal__title {
+  margin: 0;
+  margin-bottom: 1.2rem;
+
+  font-size: var(--font-size-xl);
+}
+
+.modal__buttons .button {
+  margin-right: 0.8rem;
+}

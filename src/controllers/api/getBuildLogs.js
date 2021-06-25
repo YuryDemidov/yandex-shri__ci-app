@@ -1,6 +1,6 @@
 const getBuildLog = require('../db/getBuildLog');
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
   const urlParts = req.originalUrl.split(`/`);
   const buildId = urlParts[urlParts.length - 2];
 

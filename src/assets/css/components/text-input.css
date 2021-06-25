@@ -1,0 +1,90 @@
+.text-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.6rem;
+
+  line-height: 1.4;
+}
+
+.text-input_inline {
+  flex-direction: row;
+  align-items: center;
+}
+
+.text-input_inline .text-input__wrap {
+  max-width: 5.2rem;
+  margin: 0 0.8rem;
+
+  text-align: right;
+}
+
+.text-input_inline .text-input__label {
+  margin: 0;
+}
+
+.text-input_required .text-input__label_before::after {
+  content: '*';
+
+  display: inline-block;
+  margin-left: 0.2rem;
+
+  vertical-align: top;
+  color: var(--error-color);
+}
+
+.text-input__wrap {
+  position: relative;
+
+  max-width: 44.5rem;
+  width: 100%;
+}
+
+.text-input__label {
+  margin-top: 0.2rem;
+  margin-bottom: 0.6rem;
+
+  letter-spacing: 0.006rem;
+}
+
+.text-input__input {
+  width: 100%;
+  padding: 0.9rem 1.3rem;
+
+  border: 0.2rem solid var(--x-light-dim-color);
+  border-radius: 0.4rem;
+}
+
+.text-input_invalid .text-input__input {
+  border-color: var(--error-color);
+}
+
+.text-input__input:focus {
+  border-color: var(--dim-color);
+  outline: none;
+}
+
+.text-input__input::placeholder {
+  color: var(--light-dim-color);
+}
+.text-input__input::-webkit-input-placeholder {
+  color: var(--light-dim-color);
+}
+.text-input__input::-moz-placeholder {
+  color: var(--light-dim-color);
+}
+.text-input__input:-ms-input-placeholder {
+  color: var(--light-dim-color);
+}
+
+.text-input__input_clear-button {
+  padding-right: 3.4rem;
+}
+
+.text-input .button_clear {
+  position: absolute;
+  top: 50%;
+  right: 0;
+
+  transform: translateY(-50%);
+}

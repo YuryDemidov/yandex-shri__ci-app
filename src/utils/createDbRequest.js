@@ -1,7 +1,7 @@
-const axios = require('axios');
-const { DB_URL } = require('../config');
+import axios from 'axios';
+import { DB_URL } from '../config';
 
-exports.createDbRequest = (route, axiosRequestConfig) => {
+export default (route, axiosRequestConfig) => {
   return axios({
     url: `${DB_URL}${route}`,
     headers: {

@@ -1,6 +1,6 @@
 const getBuildDetails = require('../db/getBuildDetails');
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
   const buildId = req.originalUrl.split('/').pop();
 
   const dbResponse = await getBuildDetails(buildId);

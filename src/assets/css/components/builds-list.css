@@ -1,0 +1,61 @@
+.builds-list {
+  padding-top: 0.8rem;
+  padding-bottom: 1.6rem;
+}
+
+.builds-list__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.builds-list .button {
+  width: 100%;
+}
+
+.builds-list .button__content {
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .builds-list .build-card {
+    display: grid;
+    grid-template-areas:
+      'heading date'
+      'info date';
+    padding: 1.2rem 2.4rem;
+  }
+
+  .builds-list .build-card__heading {
+    position: static;
+
+    grid-area: heading;
+    margin-bottom: 0.4rem;
+  }
+
+  .builds-list .build-card__commit-info {
+    grid-area: info;
+    margin-bottom: 0;
+    padding-left: 3.2rem;
+  }
+
+  .builds-list .build-card__date-info {
+    grid-area: date;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: auto;
+    padding-top: 0;
+
+    border-top: none;
+  }
+
+  .builds-list .build-card__date-info .icon-with-title + .icon-with-title {
+    margin-left: 0;
+  }
+
+  .builds-list .button {
+    width: auto;
+    min-height: auto;
+    padding: 0.7rem 1.3rem;
+  }
+}

@@ -1,0 +1,51 @@
+.build-logs {
+  padding-top: 0.4rem;
+}
+
+.build-logs .build-card {
+  cursor: default;
+}
+
+.build-logs .build-card__date-info .svg-icon {
+  fill: var(--dim-color);
+}
+
+.build-logs__output {
+  overflow: scroll;
+  margin: 1.6rem -5vw;
+  padding: 0.8rem 4.5vw;
+
+  font-family: Hack, monospace;
+  font-size: var(--font-size-xxs);
+  line-height: 2;
+
+  background-color: var(--xx-light-dim-color);
+}
+
+@media (min-width: 1024px) {
+  .build-logs {
+    padding-top: 0.8rem;
+  }
+
+  .build-logs .build-card {
+    padding-right: 2.4rem;
+    padding-left: 4.8rem;
+  }
+
+  .build-logs .build-card__commit-info,
+  .build-logs .build-card__date-info {
+    padding-left: 0.8rem;
+  }
+
+  .build-logs__output {
+    margin-right: 0;
+    margin-bottom: 2rem;
+    margin-left: 0;
+    padding: 0.8rem 1.2rem;
+
+    font-size: var(--font-size-xs);
+    line-height: 1.8;
+
+    border-radius: 0.6rem;
+  }
+}

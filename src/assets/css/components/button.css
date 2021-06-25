@@ -1,0 +1,114 @@
+.button {
+  position: relative;
+
+  display: inline-block;
+  min-height: 3.6rem;
+  padding: 1rem 2rem;
+
+  vertical-align: middle;
+  text-decoration: none;
+  color: var(--default-color);
+
+  background: none;
+  border: none;
+  border-radius: 0.4rem;
+  outline: none;
+  cursor: pointer;
+
+  transition: background-color 0.4s;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  border-width: 0.2rem;
+  border-style: solid;
+  border-radius: inherit;
+  opacity: 0;
+
+  transform: translate(-50%, -50%);
+}
+
+.button:focus::before {
+  opacity: 1;
+}
+
+.button_small {
+  min-height: 2.8rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.button_primary {
+  background-color: var(--primary-color);
+}
+
+.button_primary:hover {
+  background-color: var(--primary-hover-color);
+}
+
+.button_primary:focus::before {
+  border-color: var(--primary-dark-color);
+}
+
+.button_secondary {
+  background-color: var(--secondary-color);
+}
+
+.button_secondary:hover {
+  background-color: var(--secondary-hover-color);
+}
+
+.button_secondary:focus::before {
+  border-color: var(--dim-color);
+}
+
+.button_clear {
+  min-height: initial;
+  height: 100%;
+  padding: 1rem;
+}
+
+.button_clear::before {
+  content: none;
+}
+
+.button_clear .svg-icon {
+  fill: var(--light-dim-color);
+}
+
+.button_clear:focus {
+  outline: none;
+}
+
+.button_clear:focus .svg-icon {
+  fill: var(--dark-dim-color);
+}
+
+.button_link-flex {
+  display: flex;
+}
+
+.button:disabled {
+  background-color: var(--xx-light-dim-color);
+}
+
+.button__content {
+  display: flex;
+}
+
+.button:disabled .button__content {
+  color: var(--dark-dim-color);
+
+  opacity: 0.5;
+}
+
+.button .icon-with-title__title {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}

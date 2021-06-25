@@ -1,0 +1,202 @@
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('YS Text'), local('Yandex Sans Text'), local('YandexSans Text'), local('YS Text Regular'),
+    local('Yandex Sans Text Regular'), local('YandexSans Text Regular'), local('YandexSansText-Regular'),
+    url(../fonts/YandexSansText-Regular.woff2) format('woff2'),
+    url(../fonts/YandexSansText-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('YS Text Medium'), local('Yandex Sans Text Medium'),
+    local('YandexSans Text Medium'), local('YandexSansText-Medium'),
+    url(../fonts/YandexSansText-Medium.woff2) format('woff2'),
+    url(../fonts/YandexSansText-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'YS Text';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('YS Text Bold'), local('Yandex Sans Text Bold'),
+    local('YandexSans Text Bold'), local('YandexSansText-Bold'),
+    url(../fonts/YandexSansText-Bold.woff2) format('woff2'),
+    url(../fonts/YandexSansText-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Hack';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src:
+    local('Hack'), local('Hack Regular'), local('Hack-Regular'),
+    url(../fonts/Hack-Regular.woff2) format('woff2'),
+    url(../fonts/Hack-Regular.woff) format('woff');
+}
+
+:root {
+  --default-color: #000000;
+  --alt-default-color: #ffffff;
+  --primary-color: #ffcc00;
+  --primary-dark-color: #b38f00;
+  --primary-hover-color: #f2c200;
+  --secondary-color: #e6e6e6;
+  --secondary-hover-color: #dbdbdb;
+  --success-color: #00b341;
+  --error-color: #ff3333;
+  --warning-color: #ff9a00;
+  --gray-text-color: #7f8285;
+  --gray-bg-color: #f0f2f3;
+  --link-hover-color: #e00000;
+  --shadow-color: rgba(67, 68, 69, 0.3);
+  --modal-bg-color: rgba(0, 0, 0, 0.4);
+  --xx-dark-dim-color: #111111;
+  --x-dark-dim-color: #434445;
+  --dark-dim-color: #7f7f7f;
+  --dim-color: #b3b3b3;
+  --light-dim-color: #cccccc;
+  --x-light-dim-color: #d9d9d9;
+  --xx-light-dim-color: #f2f2f2;
+
+  --font-size-xxs: 1rem;
+  --font-size-xs: 1.1rem;
+  --font-size-s: 1.3rem;
+  --font-size-m: 1.5rem;
+  --font-size-l: 1.6rem;
+  --font-size-xl: 1.8rem;
+  --font-size-xxl: 2.4rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body,
+#root,
+.page {
+  width: 100%;
+  height: 100%;
+  /*noinspection CssInvalidPropertyValue*/
+  height: -webkit-fill-available;
+}
+
+html {
+  box-sizing: border-box;
+
+  font-size: 62.5%;
+}
+
+body {
+  min-width: 32rem;
+
+  font-family: 'YS Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Arial', 'Helvetica Neue', sans-serif;
+  font-size: var(--font-size-s);
+  line-height: 1.225;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: 'Hack', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 575px) {
+  .hidden_mobile {
+    display: none !important;
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 0.1rem !important;
+  height: 0.1rem !important;
+  margin: -0.1rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  -webkit-clip-path: inset(100%) !important;
+  clip-path: inset(100%) !important;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.page_no-scroll {
+  overflow: hidden;
+}
+
+.page__content {
+  flex-grow: 1;
+}
+
+.container {
+  max-width: 102.4rem;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--gray-text-color);
+
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--link-hover-color);
+}
+
+.message {
+  margin: 0;
+  margin-top: 0.8rem;
+}
+
+.message_success {
+  color: var(--success-color);
+
+  animation-name: fade-in;
+  animation-duration: 0.4s;
+}
+
+.message_error {
+  color: var(--error-color);
+
+  animation-name: head-shake;
+  animation-duration: 1.2s;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 10rem;
+  }
+}

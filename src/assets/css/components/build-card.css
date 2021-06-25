@@ -1,0 +1,191 @@
+.build-card {
+  position: relative;
+
+  display: block;
+  margin-bottom: 0.8rem;
+  padding: 1.6rem 1.2rem;
+  padding-left: 3.6rem;
+
+  text-decoration: none;
+  color: var(--default-color);
+
+  box-shadow:
+    0 0 0.1rem var(--shadow-color),
+    0 0.1rem 0.1rem var(--shadow-color);
+  border-radius: 0.6rem;
+
+  cursor: pointer;
+}
+
+.build-card[href]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 0.4rem;
+  box-shadow:
+    0 0 0.1rem var(--shadow-color),
+    0 0.2rem 0.8rem var(--shadow-color);
+  opacity: 0;
+
+  transition: opacity 0.4s;
+}
+
+.build-card[href]:focus {
+  outline: none;
+}
+
+.build-card[href]:hover::before,
+.build-card[href]:focus::before {
+  opacity: 1;
+}
+
+.build-card__heading {
+  margin: 0;
+}
+
+.build-card__number {
+  position: relative;
+  right: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+
+  font-weight: 500;
+  font-size: var(--font-size-l);
+  line-height: 1;
+}
+
+.build-card__number_success {
+  color: var(--success-color);
+}
+
+.build-card__number_fail {
+  color: var(--error-color);
+}
+
+.build-card__number_waiting {
+  color: var(--warning-color);
+}
+
+.build-card__number .icon-with-title__title {
+  margin-left: 0.8rem;
+}
+
+.build-card__commit-message {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+
+  font-weight: 400;
+  font-size: var(--font-size-m);
+  line-height: 1.35;
+  vertical-align: middle;
+}
+
+.build-card__commit-info,
+.build-card__date-info {
+  display: flex;
+
+  letter-spacing: 0.006rem;
+}
+
+.build-card__commit-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+}
+
+.build-card__commit-info .icon-with-title + .icon-with-title {
+  margin-top: 0.8rem;
+}
+
+.build-card__commit-info .icon-with-title__title,
+.build-card__date-info .icon-with-title__title {
+  line-height: 1.3;
+}
+
+.build-card__commit-info .svg-icon {
+  fill: var(--dim-color);
+}
+
+.build-card__date-info {
+  padding-top: 0.8rem;
+
+  border-top: 0.1rem solid var(--gray-bg-color);
+}
+
+.build-card__date-info .icon-with-title + .icon-with-title {
+  margin-left: 1rem;
+}
+
+.build-card__date-info .icon-with-title__title,
+.build-card__commit-info .icon-with-title__title_additional {
+  opacity: 0.65;
+}
+
+.build-card__date-info .svg-icon {
+  fill: var(--light-dim-color);
+}
+
+@media (min-width: 576px) {
+  .build-card__heading {
+    position: relative;
+    right: 2.4rem;
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.4rem;
+  }
+
+  .build-card__number,
+  .build-card__commit-message {
+    margin-bottom: 0;
+  }
+
+  .build-card__number {
+    position: static;
+
+    margin-right: 0.4rem;
+  }
+
+  .build-card__commit-info {
+    flex-direction: row;
+    margin-bottom: 0.8rem;
+  }
+
+  .build-card__commit-info .icon-with-title + .icon-with-title {
+    margin-top: 0;
+    margin-left: 0.8rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .build-card {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+
+  .build-card__heading {
+    align-items: flex-start;
+  }
+
+  .build-card__number {
+    font-size: var(--font-size-xl);
+    line-height: 1.15;
+  }
+
+  .build-card__number .icon-with-title {
+    align-items: flex-start;
+  }
+
+  .build-card__number .svg-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
