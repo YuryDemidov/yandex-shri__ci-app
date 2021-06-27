@@ -1,23 +1,29 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintWebpackPlugin = require('eslint-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 
 const isDev = process.env.NODE_ENV === 'development';
 
 const styleLoaders = (isModule) => {
+  const CSSLoaderOptions = {
+    modules: {
+      mode: isModule ? 'local' : 'global',
+      exportLocalsConvention: 'asIs',
+    },
+    esModule: false,
+    importLoaders: 2,
+    sourceMap: isDev,
+  };
+
+  if (isModule) {
+    CSSLoaderOptions.modules.localIdentName = isDev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:5]';
+  }
+
   const CSSLoader = {
     loader: 'css-loader',
-    options: {
-      modules: {
-        mode: isModule ? 'local' : 'global',
-        localIdentName: isModule ? (isDev ? '[name]_[local]_[hash:base64:5]' : '[hash:base64:5]') : null,
-        exportLocalsConvention: 'camelCase',
-      },
-      importLoaders: 2,
-      sourceMap: isDev,
-    },
+    options: CSSLoaderOptions,
   };
 
   const PostCSSLoader = {
@@ -31,40 +37,29 @@ const styleLoaders = (isModule) => {
   return [isDev ? 'isomorphic-style-loader' : MiniCssExtractPlugin.loader, CSSLoader, PostCSSLoader, 'sass-loader'];
 };
 
-module.exports = {
-  stats: {
-    errorDetails: true,
-  },
-  devServer: {
-    historyApiFallback: true,
-    writeToDisk: true,
-    injectClient: false,
-    index: '',
-  },
-  entry: {
-    index: ['webpack-dev-server/client?http://localhost:8080', path.join(__dirname, 'src', 'index.js')],
-    server: path.join(__dirname, 'src', 'server.js'),
-  },
+const plugins = (...extra) => {
+  return [new HtmlWebpackPlugin(), isDev ? new ESLintWebpackPlugin() : null, ...extra];
+};
+
+const commonConfigParts = {
   output: {
     publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  target: 'node',
-  externals: [
-    {
-      'serialize-javascript': 'commonjs2 serialize-javascript',
-    },
-    nodeExternals(),
-  ],
-  plugins: [new HtmlWebpackPlugin(), isDev ? new ESLintWebpackPlugin() : null],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
+        resolve: {
+          aliasFields: ['main'],
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -82,3 +77,42 @@ module.exports = {
     ],
   },
 };
+
+const serverConfig = {
+  ...commonConfigParts,
+  entry: {
+    server: path.join(__dirname, 'src', 'server'),
+  },
+  plugins: plugins(),
+  target: 'node',
+};
+
+const clientConfig = {
+  ...commonConfigParts,
+  entry: {
+    index: ['webpack-dev-server/client?http://localhost:8080', path.join(__dirname, 'src', 'client')],
+  },
+  plugins: plugins(
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    })
+  ),
+  devServer: {
+    historyApiFallback: true,
+    writeToDisk: true,
+    injectClient: false,
+    index: '',
+    proxy: {
+      context: () => true,
+      target: 'http://localhost:8081',
+      bypass: (req) => {
+        if (req.headers.accept.indexOf('html') !== -1) {
+          return null;
+        }
+        return req.url;
+      },
+    },
+  },
+};
+
+module.exports = [clientConfig, serverConfig];
