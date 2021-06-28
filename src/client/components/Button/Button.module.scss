@@ -93,15 +93,18 @@
     display: flex;
   }
 
-  &:disabled {
+  &:disabled,
+  &_disabled {
     background-color: var(--xx-light-dim-color);
+    pointer-events: none;
   }
 
   &__content {
     display: flex;
   }
 
-  &:disabled &__content {
+  &:disabled &__content,
+  &_disabled &__content {
     color: var(--dark-dim-color);
 
     opacity: 0.5;

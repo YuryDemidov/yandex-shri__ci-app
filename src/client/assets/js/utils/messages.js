@@ -1,10 +1,11 @@
 export const MESSAGES = {
   ERROR: {
     emptyCommitHash: 'Please, fill in commit hash',
+    noChanges: 'Data was not modified',
     nonNumberPeriod: 'Period must contain only numeric symbols',
-    required: 'Please, fill in all required fields'
+    required: 'Please, fill in all required fields',
   },
   SUCCESS: {
-    send: 'Data was successfully validated and should be processed. Output in console'
-  }
+    send: 'Your settings was successfully updated',
+  },
 };

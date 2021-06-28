@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getStateSettings } from '../../store/settingsSlice';
+import { getStateSettings, updateSettings } from '../../store/settingsSlice';
 import { Button } from '../Button/Button';
 import { TextInput } from '../TextInput/TextInput';
-import { Preloader } from '../Preloader/Preloader';
 import { MESSAGES } from '../../assets/js/utils/messages';
 import { REGEXPS } from '../../assets/js/utils/regexps';
 
@@ -18,19 +17,26 @@ export const SettingsContent = ({ loadData }) => {
     type: 'error',
   });
   const [errorInputs, setErrorInputs] = useState([]);
+  const [isDataChanged, setIsDataChanged] = useState(false);
+  const [isRequestSent, setIsRequestSent] = useState(false);
 
   useEffect(() => {
     dispatch(loadData());
-  }, [loadData, dispatch]);
+  }, [loadData, dispatch, settings]);
 
-  if (!settings) {
-    return <Preloader />;
-  }
-
-  const { repoName, buildCommand, mainBranch, period } = settings;
+  const { repoName, buildCommand, mainBranch, period } = settings || {};
 
   const saveSettings = (evt) => {
     evt.preventDefault();
+
+    if (!isDataChanged) {
+      setMessage({
+        text: MESSAGES.ERROR.noChanges,
+        type: 'error',
+      });
+      return;
+    }
+
     const requestBody = {};
     const formData = new FormData(evt.target.form);
     let isFormValid = true;
@@ -61,26 +67,52 @@ export const SettingsContent = ({ loadData }) => {
       return;
     }
 
-    setMessage({
-      text: MESSAGES.SUCCESS.send,
-      type: 'success',
-    });
-    alert(JSON.stringify(requestBody));
+    // Without this defaults server responds with validation error with 400 status
+    if (!requestBody.mainBranch) {
+      requestBody.mainBranch = 'master';
+    }
+    if (!requestBody.period) {
+      requestBody.period = 60;
+    }
+
+    setIsRequestSent(true);
+
+    dispatch(updateSettings(requestBody))
+      .then((data) => {
+        if (data.error) {
+          throw data.error;
+        }
+        setMessage({
+          text: MESSAGES.SUCCESS.send,
+          type: 'success',
+        });
+      })
+      .catch((error) => {
+        setMessage({
+          text: error.message,
+          type: 'error',
+        });
+      })
+      .finally(() => {
+        setIsDataChanged(false);
+        setIsRequestSent(false);
+      });
   };
 
-  const hideErrors = () => {
+  const handleFormInput = () => {
     setMessage({
       text: '',
       type: 'error',
     });
     setErrorInputs([]);
+    setIsDataChanged(true);
   };
 
   return (
     <div className="settings">
       <h2 className="settings__title">Settings</h2>
       <p className="settings__description">Configure repository connection and synchronization settings.</p>
-      <form className="settings__form" action="#" method="post" onInput={hideErrors}>
+      <form className="settings__form" action="#" method="post" onInput={handleFormInput}>
         <TextInput
           id="repoName"
           className={errorInputs.includes('repoName') ? 'text-input_invalid' : ''}
@@ -120,8 +152,14 @@ export const SettingsContent = ({ loadData }) => {
           labelTextAfter="minutes"
         />
         <div className="settings__buttons">
-          <Button content="Save" modifiers={['primary']} type="submit" clickHandler={saveSettings} />
-          <Link to="/" className="button button_secondary">
+          <Button
+            content="Save"
+            modifiers={['primary']}
+            type="submit"
+            clickHandler={saveSettings}
+            disabled={isRequestSent}
+          />
+          <Link to="/" className={`button button_secondary${isRequestSent ? ' button_disabled' : ''}`}>
             <span className="button__content">Cancel</span>
           </Link>
         </div>

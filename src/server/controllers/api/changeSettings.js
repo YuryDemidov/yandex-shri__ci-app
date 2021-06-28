@@ -15,7 +15,7 @@ export default async (req, res, next) => {
     await changeConfig(req.body);
 
     if (!previousConfig.data || previousConfig.data.repoName !== req.body.repoName) {
-      cloneRepository(req.body.repoName);
+      await cloneRepository(req.body.repoName);
     }
     return res.sendStatus(200);
   } catch (e) {

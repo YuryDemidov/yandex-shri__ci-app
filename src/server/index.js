@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 import express, { json } from 'express';
+import cors from 'cors';
 
 import { PORT } from './config';
 import { apiRouter } from './routes';
@@ -11,6 +12,8 @@ config();
 const app = express();
 
 app.use(json());
+app.use(cors());
+app.options('*', cors());
 
 // api routes
 app.use('/api', apiRouter);

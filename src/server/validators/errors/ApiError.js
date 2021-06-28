@@ -16,6 +16,12 @@ export class BadRequestApiError extends ApiError {
   }
 }
 
+export class GitActionError extends ApiError {
+  constructor(message = 'Git Error') {
+    super(400, message);
+  }
+}
+
 export class NotFoundApiError extends ApiError {
   constructor(message = 'Not Found') {
     super(404, message);

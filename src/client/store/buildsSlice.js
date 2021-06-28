@@ -3,10 +3,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SERVER_URL } from '../../server/config';
 
 export const addBuilds = createAsyncThunk('build/list', async () => {
-  const [builds, settings] = await Promise.all([
-    axios.get(`${SERVER_URL}/api/builds`),
-    axios.get(`${SERVER_URL}/api/settings`),
-  ]);
+  const settings = await axios.get(`${SERVER_URL}/api/settings`);
+  const builds =
+    settings.data.repoName && settings.data.buildCommand
+      ? await axios.get(`${SERVER_URL}/api/builds`)
+      : { data: { data: [] } };
 
   return {
     builds: builds.data,

@@ -6,14 +6,16 @@ import { TextInput } from '../TextInput/TextInput';
 import { MESSAGES } from '../../assets/js/utils/messages';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
-import './Modal.module.scss';
-import './ModalWrap.module.scss';
+import modalStyles from './Modal.module.scss';
+import modalWrapStyles from './ModalWrap.module.scss';
 import styles from './NewBuildModal.module.scss';
 
 export const NewBuildModal = ({ show, setShow }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useStyles(styles);
+  useStyles(modalStyles);
+  useStyles(modalWrapStyles);
 
   if (!show) {
     return null;

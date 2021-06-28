@@ -7,12 +7,13 @@ import { NewBuildModal } from '../NewBuildModal/NewBuildModal';
 import { clientRoutesConfig } from '../../routes';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
-import './normalize.scss';
+import normalizeStyles from './normalize.scss';
 import styles from './App.module.scss';
 
 export const App = () => {
   const [showNewBuildModal, setShowNewBuildModal] = useState(false);
   useStyles(styles);
+  useStyles(normalizeStyles);
 
   const showBuildModal = () => {
     setShowNewBuildModal(true);

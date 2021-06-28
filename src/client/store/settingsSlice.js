@@ -17,12 +17,30 @@ export const fetchSettings = createAsyncThunk(
   }
 );
 
+export const updateSettings = createAsyncThunk('settings/update', async (settingsData) => {
+  try {
+    const response = await axios.post(`${SERVER_URL}/api/settings`, settingsData);
+    return JSON.parse(response.config.data);
+  } catch (e) {
+    throw new Error(e.response.data.message);
+  }
+});
+
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState: null,
   extraReducers: (builder) => {
     builder.addCase(fetchSettings.fulfilled, (state, action) => {
       return action.payload.data;
+    });
+    builder.addCase(updateSettings.fulfilled, (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    });
+    builder.addCase(updateSettings.rejected, (state) => {
+      return state;
     });
     builder.addCase(addBuilds.fulfilled, (state, action) => {
       return action.payload.settings.data;
