@@ -10,12 +10,12 @@
   align-items: center;
 
   background-color: var(--alt-default-color);
-}
 
-.preloader__icon {
-  animation: rotate 0.9s linear infinite;
-}
+  &__icon {
+    animation: rotate 0.9s linear infinite;
 
-.preloader__icon svg {
-  display: block;
+    svg {
+      display: block;
+    }
+  }
 }

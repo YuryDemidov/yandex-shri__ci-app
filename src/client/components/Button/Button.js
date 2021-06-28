@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../assets/css/components/button.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './Button.module.scss';
 
 export const Button = ({ content, modifiers = [], type = 'button', disabled, ariaLabel, clickHandler }) => {
+  useStyles(styles);
+
   return (
     <button
       className={modifiers.reduce((className, modifier) => `${className} button_${modifier}`, 'button')}

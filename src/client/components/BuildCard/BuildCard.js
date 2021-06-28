@@ -13,7 +13,8 @@ export const BuildCard = ({ buildData: build, isLink }) => {
 
   const buildUrl = `/build/${build.id}`;
   const dateStringParts = new Date(build.start).toString().split(' ');
-  const dateOutput = `${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[4].substring(0, 5)}`;
+  const dateOutput = `${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[4]}`;
+  console.log(dateOutput);
   const periodMinutes = build.duration % 60;
   const periodHours = (build.duration - periodMinutes) / 60;
   const periodOutput = `${periodHours ? `${periodHours} h` : ''}${periodMinutes ? ` ${periodMinutes} min` : ''}`;
@@ -42,7 +43,7 @@ export const BuildCard = ({ buildData: build, isLink }) => {
         <IconWithTitle
           icon={<SvgIcon id="icon-commit" width={16} height={16} />}
           title={build.branchName}
-          additionalTitle={build.commitHash}
+          additionalTitle={build.commitHash.substring(0, 7)}
         />
         <IconWithTitle icon={<SvgIcon id="icon-user" width={16} height={16} />} title={build.authorName} />
       </div>

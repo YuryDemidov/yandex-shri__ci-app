@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Button } from '../Button/Button';
 import { SvgIcon } from '../Svg/SvgIcon';
 
-import '../../assets/css/components/text-input.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './TextInput.module.scss';
 
 export const TextInput = ({
   id,
@@ -19,6 +20,8 @@ export const TextInput = ({
   hasClearButton,
 }) => {
   const [value, setValue] = useState(initialValue);
+
+  useStyles(styles);
 
   const handleChange = (evt) => {
     setValue(evt.target.value);

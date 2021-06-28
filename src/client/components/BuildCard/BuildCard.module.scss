@@ -81,12 +81,14 @@
 
   &__commit-message {
     display: inline-block;
+    max-width: 100%;
     margin-bottom: 0.8rem;
 
     font-weight: 400;
     font-size: var(--font-size-m);
     line-height: 1.35;
     vertical-align: middle;
+    overflow-wrap: break-word;
   }
 
   &__commit-info,
@@ -109,6 +111,15 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 0.8rem;
+
+    .icon-with-title {
+      &__title {
+        overflow: hidden;
+        max-width: 100%;
+
+        text-overflow: ellipsis;
+      }
+    }
 
     .icon-with-title + .icon-with-title {
       margin-top: 0.8rem;

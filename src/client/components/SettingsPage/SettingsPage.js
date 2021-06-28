@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PageHeader } from '../Page/PageHeader';
-import { PageContent } from '../Page/PageContent';
+import { PageHeader } from '../PageHeader/PageHeader';
+import { PageContent } from '../PageContent/PageContent';
 import { HeaderTitle } from '../Header/HeaderTitle';
 import { SettingsContent } from './SettingsContent';
 
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './Settings.module.scss';
+
 export const SettingsPage = ({ loadData }) => {
+  useStyles(styles);
+
   return (
     <>
       <PageHeader

@@ -1,8 +1,11 @@
 import React from 'react';
 
-import '../../assets/css/components/page-footer.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './PageFooter.module.scss';
 
 export const PageFooter = () => {
+  useStyles(styles);
+
   return (
     <footer className="page__footer page-footer">
       <div className="container">

@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../assets/css/components/icon-with-title.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './IconWithTItle.module.scss';
 
 export const IconWithTitle = ({ icon, title, additionalTitle, titleClass, ariaHidden }) => {
+  useStyles(styles);
+
   return (
     <span className="icon-with-title">
       <span className="icon-with-title__icon">{icon}</span>

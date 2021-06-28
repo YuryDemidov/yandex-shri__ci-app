@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getStateBuildData } from '../../store/buildDataSlice';
 import PropTypes from 'prop-types';
 
-import { PageHeader } from '../Page/PageHeader';
-import { PageContent } from '../Page/PageContent';
+import { PageHeader } from '../PageHeader/PageHeader';
+import { PageContent } from '../PageContent/PageContent';
 import { HeaderTitle } from '../Header/HeaderTitle';
 import { HeaderButtonsGroup } from '../Header/HeaderButtonsGroup';
 import { BuildLogsContent } from './BuildLogsContent';

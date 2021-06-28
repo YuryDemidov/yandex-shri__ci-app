@@ -4,18 +4,22 @@ import PropTypes from 'prop-types';
 
 import { getStateBuilds } from '../../store/buildsSlice';
 import { StartScreenPage } from '../StartScreenPage/StartScreenPage';
-import { PageHeader } from '../Page/PageHeader';
-import { PageContent } from '../Page/PageContent';
+import { PageHeader } from '../PageHeader/PageHeader';
+import { PageContent } from '../PageContent/PageContent';
 import { HeaderTitle } from '../Header/HeaderTitle';
 import { HeaderButtonsGroup } from '../Header/HeaderButtonsGroup';
 import { BuildsListContent } from './BuildsListContent';
 import { getStateSettings } from '../../store/settingsSlice';
 import { Preloader } from '../Preloader/Preloader';
 
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './BuildsList.module.scss';
+
 export const BuildsListPage = ({ loadData, showBuildModal }) => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const builds = useSelector(getStateBuilds);
+  useStyles(styles);
 
   useEffect(() => {
     dispatch(loadData());

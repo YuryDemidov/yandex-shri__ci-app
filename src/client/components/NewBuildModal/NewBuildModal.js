@@ -5,12 +5,19 @@ import { Button } from '../Button/Button';
 import { TextInput } from '../TextInput/TextInput';
 import { MESSAGES } from '../../assets/js/utils/messages';
 
-import '../../assets/css/components/modal-wrap.css';
-import '../../assets/css/components/modal.css';
-import '../../assets/css/components/new-build-modal.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import './Modal.module.scss';
+import './ModalWrap.module.scss';
+import styles from './NewBuildModal.module.scss';
 
 export const NewBuildModal = ({ show, setShow }) => {
   const [errorMessage, setErrorMessage] = useState('');
+
+  useStyles(styles);
+
+  if (!show) {
+    return null;
+  }
 
   const closeModal = () => {
     setShow(false);
@@ -33,7 +40,7 @@ export const NewBuildModal = ({ show, setShow }) => {
     alert(`Received data: ${JSON.stringify(requestBody)}`);
   };
 
-  return show ? (
+  return (
     <div className="modal new-build-modal">
       <div className="modal__content">
         <h3 className="modal__title">New build</h3>
@@ -55,7 +62,7 @@ export const NewBuildModal = ({ show, setShow }) => {
         </form>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 NewBuildModal.propTypes = {

@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { BuildCard } from '../BuildCard/BuildCard';
 import { Button } from '../Button/Button';
 
-import '../../assets/css/components/builds-list.css';
-
 export const BuildsListContent = ({ builds, showMoreBuilds }) => {
   return (
     <>

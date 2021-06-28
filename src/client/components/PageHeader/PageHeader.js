@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../assets/css/components/page-header.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './PageHeader.module.scss';
 
 export const PageHeader = ({ renderHeaderLeft, renderHeaderRight }) => {
+  useStyles(styles);
+
   return (
     <header className="page__header page-header">
       <div className="container">

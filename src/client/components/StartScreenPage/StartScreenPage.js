@@ -1,14 +1,17 @@
 import React from 'react';
 
-import { PageHeader } from '../Page/PageHeader';
-import { PageContent } from '../Page/PageContent';
+import { PageHeader } from '../PageHeader/PageHeader';
+import { PageContent } from '../PageContent/PageContent';
 import { HeaderTitle } from '../Header/HeaderTitle';
 import { HeaderButtonsGroup } from '../Header/HeaderButtonsGroup';
 import { StartScreenContent } from './StartScreenContent';
 
-import '../../assets/css/components/start-screen.css';
+import useStyles from 'isomorphic-style-loader/useStyles';
+import styles from './StartScreen.module.scss';
 
 export const StartScreenPage = () => {
+  useStyles(styles);
+
   return (
     <>
       <PageHeader

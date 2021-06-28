@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { SvgSprite } from '../Svg/SvgSprite';
-import { PageFooter } from '../Page/PageFooter';
+import { PageFooter } from '../PageFooter/PageFooter';
 import { NewBuildModal } from '../NewBuildModal/NewBuildModal';
 import { clientRoutesConfig } from '../../routes';
 

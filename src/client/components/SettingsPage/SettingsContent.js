@@ -10,8 +10,6 @@ import { Preloader } from '../Preloader/Preloader';
 import { MESSAGES } from '../../assets/js/utils/messages';
 import { REGEXPS } from '../../assets/js/utils/regexps';
 
-import '../../assets/css/components/settings.css';
-
 export const SettingsContent = ({ loadData }) => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
