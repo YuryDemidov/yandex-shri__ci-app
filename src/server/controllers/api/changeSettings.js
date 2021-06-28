@@ -9,14 +9,13 @@ export default async (req, res, next) => {
     if (!isConfigSchemaValid(req.body)) {
       throw new BadRequestApiError("Request body doesn't match the API schema");
     }
-
     const dbResponse = await getConfig();
     const previousConfig = dbResponse.data;
-    await changeConfig(req.body);
 
     if (!previousConfig.data || previousConfig.data.repoName !== req.body.repoName) {
       await cloneRepository(req.body.repoName);
     }
+    await changeConfig(req.body);
     return res.sendStatus(200);
   } catch (e) {
     next(e);
