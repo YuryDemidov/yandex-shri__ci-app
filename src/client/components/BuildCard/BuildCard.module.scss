@@ -66,11 +66,13 @@
       color: var(--success-color);
     }
 
-    &_fail {
+    &_fail,
+    &_canceled {
       color: var(--error-color);
     }
 
-    &_waiting {
+    &_waiting,
+    &_inprogress {
       color: var(--warning-color);
     }
 

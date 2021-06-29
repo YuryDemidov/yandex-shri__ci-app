@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { SvgSprite } from '../Svg/SvgSprite';
 import { PageFooter } from '../PageFooter/PageFooter';
+import { ModalWrap } from '../ModalWrap/ModalWrap';
 import { NewBuildModal } from '../NewBuildModal/NewBuildModal';
 import { clientRoutesConfig } from '../../routes';
 
@@ -11,19 +12,19 @@ import normalizeStyles from './normalize.scss';
 import styles from './App.module.scss';
 
 export const App = () => {
-  const [showNewBuildModal, setShowNewBuildModal] = useState(false);
+  const [modal, setModal] = useState(null);
   useStyles(styles);
   useStyles(normalizeStyles);
 
-  const showBuildModal = () => {
-    setShowNewBuildModal(true);
+  const closeModal = () => {
+    setModal(null);
   };
-  const closeBuildModal = () => {
-    setShowNewBuildModal(false);
+  const showBuildModal = () => {
+    setModal(<NewBuildModal closeModal={closeModal} />);
   };
 
   return (
-    <div className={`page${showNewBuildModal ? ' page_no-scroll' : ''}`}>
+    <div className={`page${modal ? ' page_no-scroll' : ''}`}>
       <SvgSprite />
       <Switch>
         {clientRoutesConfig.map((route) => (
@@ -32,10 +33,7 @@ export const App = () => {
           </Route>
         ))}
       </Switch>
-      <div className={`modal-wrap${showNewBuildModal ? '' : ' hidden'}`}>
-        <div className="modal-wrap__background" onClick={closeBuildModal} />
-        <NewBuildModal show={showNewBuildModal} setShow={setShowNewBuildModal} />
-      </div>
+      <ModalWrap modal={modal} modalClass="new-build-modal" closeModal={closeModal} />
       <PageFooter />
     </div>
   );

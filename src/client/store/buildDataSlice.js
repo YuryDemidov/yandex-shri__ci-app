@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SERVER_URL } from '../../server/config';
 
-export const fetchBuildData = createAsyncThunk('build/log', async (buildId) => {
+export const fetchBuildData = createAsyncThunk('build/data', async (buildId) => {
   const [buildDetails, buildLogs, settings] = await Promise.all([
     axios.get(`${SERVER_URL}/api/builds/${buildId}`),
     axios.get(`${SERVER_URL}/api/builds/${buildId}/logs`),
@@ -28,10 +28,15 @@ export const buildDataSlice = createSlice({
     builder.addCase(fetchBuildData.fulfilled, (state, action) => {
       return {
         details: {
-          ...state.details,
           ...action.payload.buildData.details.data,
         },
-        logs: action.payload.buildData.logs.data,
+        logs: action.payload.buildData.logs,
+      };
+    });
+    builder.addCase(fetchBuildData.pending, () => {
+      return {
+        details: {},
+        logs: '',
       };
     });
   },

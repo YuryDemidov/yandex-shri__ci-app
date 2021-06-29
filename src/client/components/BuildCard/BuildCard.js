@@ -7,9 +7,14 @@ import { SvgIcon } from '../Svg/SvgIcon';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildCard.module.scss';
+import { Preloader } from '../Preloader/Preloader';
 
 export const BuildCard = ({ buildData: build, isLink }) => {
   useStyles(styles);
+
+  if (!build.id) {
+    return <Preloader />;
+  }
 
   const buildUrl = `/build/${build.id}`;
   const dateStringParts = build.start && new Date(build.start).toString().split(' ');
@@ -20,12 +25,12 @@ export const BuildCard = ({ buildData: build, isLink }) => {
   const periodOutput = `${periodHours ? `${periodHours} h` : ''}${periodMinutes ? ` ${periodMinutes} min` : ''}`;
 
   let iconId;
-  if (build.status === 'Success') {
-    iconId = 'check-mark';
-  } else if (build.status === 'Fail') {
+  if (build.status === 'Waiting' || build.status === 'InProgress') {
+    iconId = 'clock';
+  } else if (build.status === 'Fail' || build.status === 'Canceled') {
     iconId = 'cross';
   } else {
-    iconId = 'clock';
+    iconId = 'check-mark';
   }
 
   const buildCardContent = (

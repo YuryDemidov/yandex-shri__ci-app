@@ -9,6 +9,9 @@ import { createStore } from '../../client/store';
 import { clientRoutesConfig } from '../../client/routes';
 import { App } from '../../client/components/App/App';
 
+import svgFavicon from '../../client/assets/img/favicon.svg';
+import pngFavicon from '../../client/assets/img/favicon.png';
+
 const headTemplate = `
 <!DOCTYPE html>
 <html lang='en'>
@@ -16,6 +19,8 @@ const headTemplate = `
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Yandex SHRI CI Server</title>
+    <link rel="icon" type="image/svg+xml" href=${svgFavicon}>
+    <link rel="icon" type="image/png" href=${pngFavicon}>
     <script src="/index.js" defer></script>
 `;
 

@@ -1,12 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { getStateBuildData } from '../../store/buildDataSlice';
+import { requestBuild } from '../../store/buildsSlice';
 import { Button } from '../Button/Button';
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { SvgIcon } from '../Svg/SvgIcon';
 
 export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const buildData = useSelector(getStateBuildData);
+
+  const runRebuild = () => {
+    dispatch(requestBuild(buildData.details.commitHash))
+      .then((data) => {
+        const newBuildId = data.payload.data.id;
+        if (newBuildId) {
+          history.push(`/build/${newBuildId}`);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="page-header__buttons-group">
       {buttonsSet.map((buttonType) => {
@@ -22,7 +42,7 @@ export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
         }
 
         if (buttonType === 'rebuild') {
-          onClick = () => alert('rebuild');
+          onClick = runRebuild;
         }
 
         if (buttonType === 'settings' && buttonsSet.length > 1) {

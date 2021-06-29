@@ -1,25 +1,27 @@
 import requestBuild from '../db/requestBuild';
 import isBuildSchemaValid from '../../validators/middlewares/isBuildSchemaValid';
-import { getCommitBranch, getCommitMessage, getCommitAuthorName } from '../../utils/gitCommands';
+import GitExecutor from '../../utils/gitExecutor';
 import { BadRequestApiError } from '../../validators/errors/ApiError';
+import { REPO_PATH } from '../../config';
 
 export default async (req, res, next) => {
+  const gitExecutor = new GitExecutor(REPO_PATH);
   const commitHash = req.originalUrl.split(`/`).pop();
   const buildData = {
     commitHash,
   };
 
   try {
-    buildData.authorName = await getCommitAuthorName(commitHash).then((author) => author.trim());
-    buildData.commitMessage = await getCommitMessage(commitHash).then((message) => message.trim());
-    buildData.branchName = await getCommitBranch(commitHash);
+    buildData.authorName = await gitExecutor.getCommitAuthorName(commitHash).then((author) => author.trim());
+    buildData.commitMessage = await gitExecutor.getCommitMessage(commitHash).then((message) => message.trim());
+    buildData.branchName = await gitExecutor.getCommitBranch(commitHash);
     if (!isBuildSchemaValid(buildData)) {
-      throw new BadRequestApiError("Request body doesn't match the API schema");
+      next(new BadRequestApiError("Request body doesn't match the API schema"));
     }
 
-    await requestBuild(buildData);
+    const { data } = await requestBuild(buildData);
 
-    return res.sendStatus(200);
+    return res.json(data);
   } catch (e) {
     next(e);
   }

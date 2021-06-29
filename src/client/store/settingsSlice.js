@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SERVER_URL } from '../../server/config';
-import { addBuilds } from './buildsSlice';
+import { fetchBuilds } from './buildsSlice';
 import { fetchBuildData } from './buildDataSlice';
 
 export const fetchSettings = createAsyncThunk(
@@ -42,8 +42,8 @@ export const settingsSlice = createSlice({
     builder.addCase(updateSettings.rejected, (state) => {
       return state;
     });
-    builder.addCase(addBuilds.fulfilled, (state, action) => {
-      return action.payload.settings.data;
+    builder.addCase(fetchBuilds.fulfilled, (state, action) => {
+      return action.payload.settings;
     });
     builder.addCase(fetchBuildData.fulfilled, (state, action) => {
       return action.payload.settings.data;

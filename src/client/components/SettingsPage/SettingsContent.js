@@ -77,6 +77,11 @@ export const SettingsContent = ({ loadData }) => {
 
     setIsRequestSent(true);
 
+    setMessage({
+      text: `Copying your repo. Be patient...`,
+      type: '',
+    });
+
     dispatch(updateSettings(requestBody))
       .then((data) => {
         if (data.error) {
