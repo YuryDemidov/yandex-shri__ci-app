@@ -6,7 +6,7 @@ import { REPO_PATH } from '../../config';
 
 export default async (req, res, next) => {
   const gitExecutor = new GitExecutor(REPO_PATH);
-  const commitHash = req.originalUrl.split(`/`).pop();
+  const commitHash = req.params.commitHash;
   const buildData = {
     commitHash,
   };

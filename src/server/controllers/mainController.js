@@ -36,7 +36,9 @@ const tailTemplate = (innerHTml, state) => `
 export const mainController = async (req, res) => {
   res.write(headTemplate);
 
-  const store = createStore({});
+  const store = createStore({
+    queryParams: req.query,
+  });
 
   const matchedRoute = clientRoutesConfig.find((route) => matchPath(req.url, route));
   const { params } = matchPath(req.url, matchedRoute);

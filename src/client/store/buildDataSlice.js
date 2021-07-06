@@ -1,12 +1,10 @@
-import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SERVER_URL } from '../../server/config';
 
-export const fetchBuildData = createAsyncThunk('build/data', async (buildId) => {
+export const fetchBuildData = createAsyncThunk('build/data', async (buildId, { extra: { api } }) => {
   const [buildDetails, buildLogs, settings] = await Promise.all([
-    axios.get(`${SERVER_URL}/api/builds/${buildId}`),
-    axios.get(`${SERVER_URL}/api/builds/${buildId}/logs`),
-    axios.get(`${SERVER_URL}/api/settings`),
+    api.getBuild(buildId),
+    api.getBuildLogs(buildId),
+    api.getSettings(),
   ]);
 
   return {

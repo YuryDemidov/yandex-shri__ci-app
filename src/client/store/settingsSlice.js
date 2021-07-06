@@ -1,13 +1,12 @@
-import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SERVER_URL } from '../../server/config';
+
 import { fetchBuilds } from './buildsSlice';
 import { fetchBuildData } from './buildDataSlice';
 
 export const fetchSettings = createAsyncThunk(
   'settings/get',
-  async () => {
-    const response = await axios.get(`${SERVER_URL}/api/settings`);
+  async (_, { extra: { api } }) => {
+    const response = await api.getSettings();
     return response.data;
   },
   {
@@ -17,9 +16,9 @@ export const fetchSettings = createAsyncThunk(
   }
 );
 
-export const updateSettings = createAsyncThunk('settings/update', async (settingsData) => {
+export const updateSettings = createAsyncThunk('settings/update', async (settingsData, { extra: { api } }) => {
   try {
-    const response = await axios.post(`${SERVER_URL}/api/settings`, settingsData);
+    const response = await api.changeSettings(settingsData);
     return JSON.parse(response.config.data);
   } catch (e) {
     throw new Error(e.response.data.message);

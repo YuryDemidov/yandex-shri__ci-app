@@ -1,7 +1,16 @@
-(node:16184) UnhandledPromiseRejectionWarning: Error: Port 4444 is already in use.
+(node:11220) UnhandledPromiseRejectionWarning: Error: Port 4444 is already in use.
     at Object.start (/home/yury/.nvm/versions/node/v14.17.0/lib/node_modules/selenium-standalone/lib/start.js:107:11)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)
     at async Object.start (/home/yury/.nvm/versions/node/v14.17.0/lib/node_modules/selenium-standalone/bin/selenium-standalone:23:16)
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:16184) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
-(node:16184) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+(node:18:41:08.811 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "browserName": "chrome"
+}
+18:41:08.814 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 91.0.4472.101 (af52a90bf87030dd1523486a1cd3ae25c5d76c9b-refs/branch-heads/4472@{#1462}) on port 2920
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+ChromeDriver was started successfully.
+18:41:28.029 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+18:41:32.292 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 1c0f194ee6b6a5eb8bf593be293e3356 (org.openqa.selenium.chrome.ChromeDriverService)
+18:42:17.064 INFO [ActiveSessions$1.onStop] - Removing session 1c0f194ee6b6a5eb8bf593be293e3356 (org.openqa.selenium.chrome.ChromeDriverService)

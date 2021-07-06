@@ -16,7 +16,7 @@ module.exports = {
     'selenium-standalone-runner': true,
     'url-decorator': {
       query: {
-        experiment: '1',
+        integration_test: '1',
       },
     },
   },

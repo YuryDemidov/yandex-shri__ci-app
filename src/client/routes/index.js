@@ -14,7 +14,7 @@ export const clientRoutesConfig = [
   {
     path: '/build/:id',
     component: BuildLogsPage,
-    loadData: ({ id }) => fetchBuildData(id),
+    loadData: ({ id }) => fetchBuildData(id.replace(/\?.*/, '')),
   },
   {
     path: '/',

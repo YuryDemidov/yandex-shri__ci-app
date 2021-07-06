@@ -14,6 +14,7 @@ const insertCss = (...styles) => {
 
 const store = createStore({
   preloadedState: window.__SERVER_STATE,
+  queryParams: Object.fromEntries(new URLSearchParams(window.location.search).entries()),
 });
 
 ReactDOM.hydrate(

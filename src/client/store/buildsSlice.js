@@ -1,11 +1,8 @@
-import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SERVER_URL } from '../../server/config';
 
-export const fetchBuilds = createAsyncThunk('build/list', async () => {
-  const { data: settings } = await axios.get(`${SERVER_URL}/api/settings`);
-  const builds =
-    settings.data.repoName && settings.data.buildCommand ? await axios.get(`${SERVER_URL}/api/builds`) : null;
+export const fetchBuilds = createAsyncThunk('build/list', async (_, { extra: { api } }) => {
+  const { data: settings } = await api.getSettings();
+  const builds = settings.data.repoName && settings.data.buildCommand ? await api.getBuilds() : null;
 
   return {
     builds: builds ? builds.data : { data: [] },
@@ -13,8 +10,8 @@ export const fetchBuilds = createAsyncThunk('build/list', async () => {
   };
 });
 
-export const requestBuild = createAsyncThunk('build/request', async (commitHash) => {
-  const response = await axios.post(`${SERVER_URL}/api/builds/${commitHash}`);
+export const requestBuild = createAsyncThunk('build/request', async (commitHash, { extra: { api } }) => {
+  const response = await api.addBuild(commitHash);
   return response.data;
 });
 
