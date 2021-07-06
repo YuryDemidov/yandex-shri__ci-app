@@ -1,7 +1,7 @@
-(node:12547) UnhandledPromiseRejectionWarning: Error: Port 4444 is already in use.
+(node:16184) UnhandledPromiseRejectionWarning: Error: Port 4444 is already in use.
     at Object.start (/home/yury/.nvm/versions/node/v14.17.0/lib/node_modules/selenium-standalone/lib/start.js:107:11)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)
     at async Object.start (/home/yury/.nvm/versions/node/v14.17.0/lib/node_modules/selenium-standalone/bin/selenium-standalone:23:16)
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:12547) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
-(node:12547) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+(node:16184) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:16184) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

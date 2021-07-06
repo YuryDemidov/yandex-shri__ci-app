@@ -14,5 +14,10 @@ module.exports = {
       path: 'hermione/html-reporter',
     },
     'selenium-standalone-runner': true,
+    'url-decorator': {
+      query: {
+        experiment: '1',
+      },
+    },
   },
 };

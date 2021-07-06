@@ -26,6 +26,7 @@
     "eslint-webpack-plugin": "^2.5.4",
     "hermione": "^4.1.1",
     "hermione-selenium-standalone-runner": "git+ssh://git@github.com/YuryDemidov/hermione-selenium-standalone-runner.git",
+    "hermione-url-decorator": "git+ssh://git@github.com/YuryDemidov/hermione-url-decorator.git",
     "html-loader": "2.1.2",
     "html-reporter": "^7.0.2",
     "html-webpack-plugin": "^5.3.2",
