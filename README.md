@@ -17,11 +17,13 @@ npm start
 npm run server
 ```
 
-Запуск интеграционных тестов:
+Запуск интеграционных тестов (при запущенном сервере и приложении):
 ```shell script
-# В терминале
+# Установка Selenium (необходима также Java и JDK)
+npm install selenium-standalone --global
+# Результаты тестов в терминале
 npm run test:integration
-# В браузере
+# Результаты тестов в браузере
 npm run test:integration-gui
 ```
 

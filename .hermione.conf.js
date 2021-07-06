@@ -13,5 +13,6 @@ module.exports = {
     'html-reporter/hermione': {
       path: 'hermione/html-reporter',
     },
+    'selenium-standalone-runner': true,
   },
 };
