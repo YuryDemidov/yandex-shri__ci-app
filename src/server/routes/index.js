@@ -9,11 +9,11 @@ import getBuildLogs from '../controllers/api/getBuildLogs';
 
 const apiRouter = new Router();
 
-apiRouter.get('/settings', async (req, res) => res.json(await getSettings()));
+apiRouter.get('/settings', async (req, res) => res.json(await getSettings(req)));
 apiRouter.post('/settings', changeSettings);
 apiRouter.get('/builds/:buildId/logs', async (req, res) => res.json(await getBuildLogs(req)));
 apiRouter.get('/builds/:buildId', async (req, res) => res.json(await getBuild(req)));
-apiRouter.get('/builds', async (req, res) => res.json(await getBuilds()));
+apiRouter.get('/builds', async (req, res) => res.json(await getBuilds(req)));
 apiRouter.post('/builds/:commitHash', addBuild);
 
 export { apiRouter };
