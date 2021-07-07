@@ -6,18 +6,16 @@ import { Button } from '../Button/Button';
 
 export const BuildsListContent = ({ builds, showMoreBuilds }) => {
   return (
-    <>
-      <div className="builds-list">
-        <ul className="builds-list__list">
-          {builds.map((build) => (
-            <li className="builds-list__item" key={build.id}>
-              <BuildCard buildData={build} isLink />
-            </li>
-          ))}
-        </ul>
-        <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />
-      </div>
-    </>
+    <div className="builds-list">
+      <ul className="builds-list__list">
+        {builds.map((build) => (
+          <li className="builds-list__item" key={build.id}>
+            <BuildCard buildData={build} isLink />
+          </li>
+        ))}
+      </ul>
+      <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />
+    </div>
   );
 };
 
