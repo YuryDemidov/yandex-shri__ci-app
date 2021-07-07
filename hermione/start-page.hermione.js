@@ -26,5 +26,6 @@ describe('Start screen', () => {
     await browser.assertView('content', 'main');
   });
 
-  testOpenSettings(url, '.button[href="/settings"]');
+  testOpenSettings(url, '.page-header .button[href="/settings"]', 1);
+  testOpenSettings(url, '.start-screen .button[href="/settings"]', 2);
 });

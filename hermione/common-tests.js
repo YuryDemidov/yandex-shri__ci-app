@@ -27,8 +27,8 @@ module.exports.testPageHeader = (url) =>
     });
   });
 
-module.exports.testOpenSettings = (url, buttonSelector) =>
-  it('Should open settings page after "Settings" button click', async function () {
+module.exports.testOpenSettings = (url, buttonSelector, i) =>
+  it(`Should open settings page after "Settings" button click. ${i}`, async function () {
     const browser = this.browser;
     await browser.url(url);
 
@@ -36,5 +36,4 @@ module.exports.testOpenSettings = (url, buttonSelector) =>
 
     const settingsPage = await browser.$('.settings');
     await settingsPage.waitForExist();
-    await delay(3000);
   });
