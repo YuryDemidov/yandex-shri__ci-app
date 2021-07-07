@@ -6,8 +6,10 @@
   "scripts": {
     "server": "nodemon -w dist dist/server.js",
     "start": "cross-env NODE_ENV=development webpack serve",
-    "test:integration": "hermione hermione/index-page.hermione.js --retry 1",
-    "test:integration-gui": "hermione gui hermione/index-page.hermione.js --retry 1"
+    "test:integration": "hermione",
+    "test:integration:2": "hermione --integration-test=2",
+    "test:integration-gui": "hermione gui",
+    "test:integration-gui:2": "hermione gui --integration-test=2"
   },
   "author": "Iurii Demidov",
   "license": "MIT",
@@ -18,6 +20,7 @@
     "@reduxjs/toolkit": "^1.6.0",
     "babel-loader": "^8.2.2",
     "cross-env": "^7.0.3",
+    "delay": "^5.0.0",
     "eslint": "^7.29.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",

@@ -1,9 +1,19 @@
+const { integrationTestId } = require('./hermione/intergrationTestId');
+
 module.exports = {
   baseUrl: 'http://localhost:8080/',
   gridUrl: 'http://localhost:4444/wd/hub',
 
+  sets: {
+    all: {
+      files: ['hermione/**/*.hermione.js'],
+    },
+  },
   browsers: {
     chrome: {
+      antialiasingTolerance: 5,
+      screenshotDelay: 1000,
+      retry: 1,
       desiredCapabilities: {
         browserName: 'chrome',
       },
@@ -16,7 +26,7 @@ module.exports = {
     'selenium-standalone-runner': true,
     'url-decorator': {
       query: {
-        integration_test: '1',
+        integration_test: integrationTestId,
       },
     },
   },
