@@ -6,7 +6,7 @@ import { requestBuild } from '../../store/buildsSlice';
 import { closeModal, getModalState, hideModalError, showModalError } from '../../store/modalSlice';
 import { Button } from '../Button/Button';
 import { TextInput } from '../TextInput/TextInput';
-import { MESSAGES } from '../../assets/js/utils/messages';
+import { MESSAGES } from '../../assets/js/utils/constants/messages';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NewBuildModal.module.scss';

@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
+import { Preloader } from '../Preloader/Preloader';
 import { SvgIcon } from '../Svg/SvgIcon';
+import { formatDateOutput, formatDurationOutput } from '../../assets/js/utils/functions/dateFormatter';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildCard.module.scss';
-import { Preloader } from '../Preloader/Preloader';
 
 export const BuildCard = ({ buildData: build, isLink }) => {
   useStyles(styles);
@@ -17,12 +18,8 @@ export const BuildCard = ({ buildData: build, isLink }) => {
   }
 
   const buildUrl = `/build/${build.id}`;
-  const dateStringParts = build.start && new Date(build.start).toString().split(' ');
-  const dateOutput =
-    dateStringParts && `${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[4].substring(0, 5)}`;
-  const periodMinutes = build.duration % 60;
-  const periodHours = (build.duration - periodMinutes) / 60;
-  const periodOutput = `${periodHours ? `${periodHours} h` : ''}${periodMinutes ? ` ${periodMinutes} min` : ''}`;
+  const dateOutput = formatDateOutput(build.start);
+  const periodOutput = formatDurationOutput(build.duration);
 
   let iconId;
   if (build.status === 'Waiting' || build.status === 'InProgress') {
