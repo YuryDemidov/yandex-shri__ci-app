@@ -6,6 +6,7 @@
   "scripts": {
     "server": "nodemon -w dist dist/server.js",
     "start": "cross-env NODE_ENV=development webpack serve",
+    "test:unit": "mocha",
     "test:integration": "hermione",
     "test:integration:2": "hermione --integration-test=2",
     "test:integration-gui": "hermione gui",

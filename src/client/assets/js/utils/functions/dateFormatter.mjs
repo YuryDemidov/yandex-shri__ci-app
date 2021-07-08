@@ -6,7 +6,7 @@
  * null for invalid dates.
  */
 export function formatDateOutput(date) {
-  if (!date) {
+  if (!date && date !== 0) {
     return null;
   }
 
@@ -15,9 +15,9 @@ export function formatDateOutput(date) {
     return null;
   }
 
-  const dateStringParts = buildDate.toString().split(' ');
+  const dateStringParts = buildDate.toUTCString().split(' ');
 
-  return `${dateStringParts[1]} ${dateStringParts[2]}, ${dateStringParts[4].substring(0, 5)}`;
+  return `${dateStringParts[2]} ${dateStringParts[1]}, ${dateStringParts[4].substring(0, 5)}`;
 }
 
 /**
@@ -31,5 +31,5 @@ export function formatDurationOutput(duration) {
   const minutes = duration % 60;
   const hours = (duration - minutes) / 60;
 
-  return `${hours ? `${hours} h` : ''}${minutes ? ` ${minutes} min` : ''}`;
+  return `${hours ? `${hours} h` : ''} ${minutes ? `${minutes} min` : ''}`.trim();
 }
