@@ -10,10 +10,21 @@ export const fetchBuilds = createAsyncThunk('build/list', async (_, { extra: { a
   };
 });
 
-export const requestBuild = createAsyncThunk('build/request', async (commitHash, { extra: { api } }) => {
-  const response = await api.addBuild(commitHash);
-  return response.data;
-});
+export const requestBuild = createAsyncThunk(
+  'build/request',
+  async ({ commitHash, history, errorHandler }, { extra: { api } }) => {
+    try {
+      const response = await api.addBuild(commitHash);
+      const newBuildId = response.data.data.id;
+
+      if (newBuildId) {
+        history.push(`/build/${newBuildId}`);
+      }
+    } catch (error) {
+      errorHandler(error.response?.data || error);
+    }
+  }
+);
 
 export const buildsSlice = createSlice({
   name: 'builds',

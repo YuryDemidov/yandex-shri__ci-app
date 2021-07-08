@@ -32,17 +32,8 @@ export const NewBuildModal = ({ closeModal }) => {
       return;
     }
 
-    dispatch(requestBuild(commitHash))
-      .then((data) => {
-        const newBuildId = data.payload.data.id;
-        if (newBuildId) {
-          closeModalHandler();
-          history.push(`/build/${newBuildId}`);
-        }
-      })
-      .catch((error) => {
-        setErrorMessage(error.message || error);
-      });
+    dispatch(requestBuild({ commitHash, history, errorHandler: (error) => setErrorMessage(error.message || error) }));
+    // closeModalHandler();
   };
 
   return (

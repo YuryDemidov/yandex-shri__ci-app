@@ -15,16 +15,9 @@ export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
   const buildData = useSelector(getStateBuildData);
 
   const runRebuild = () => {
-    dispatch(requestBuild(buildData.details.commitHash))
-      .then((data) => {
-        const newBuildId = data.payload.data.id;
-        if (newBuildId) {
-          history.push(`/build/${newBuildId}`);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(
+      requestBuild({ commitHash: buildData.details.commitHash, history, errorHandler: (error) => console.log(error) })
+    );
   };
 
   return (
