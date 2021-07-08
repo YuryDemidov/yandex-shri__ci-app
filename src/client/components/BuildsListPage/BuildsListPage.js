@@ -2,15 +2,16 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getStateSettings } from '../../store/settingsSlice';
 import { getStateBuilds } from '../../store/buildsSlice';
-import { StartScreenPage } from '../StartScreenPage/StartScreenPage';
-import { PageHeader } from '../PageHeader/PageHeader';
-import { PageContent } from '../PageContent/PageContent';
-import { HeaderTitle } from '../Header/HeaderTitle';
+import { getStateSettings } from '../../store/settingsSlice';
+import { BuildCard } from '../BuildCard/BuildCard';
+import { Button } from '../Button/Button';
 import { HeaderButtonsGroup } from '../Header/HeaderButtonsGroup';
-import { BuildsListContent } from './BuildsListContent';
+import { HeaderTitle } from '../Header/HeaderTitle';
+import { PageContent } from '../PageContent/PageContent';
+import { PageHeader } from '../PageHeader/PageHeader';
 import { Preloader } from '../Preloader/Preloader';
+import { StartScreenPage } from '../StartScreenPage/StartScreenPage';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildsList.module.scss';
@@ -44,7 +45,22 @@ export const BuildsListPage = ({ loadData }) => {
         renderHeaderLeft={() => <HeaderTitle text={settings.repoName} />}
         renderHeaderRight={() => <HeaderButtonsGroup buttonsSet={['build', 'settings']} />}
       />
-      <PageContent renderPageContent={() => <BuildsListContent builds={builds} showMoreBuilds={showMoreBuilds} />} />
+      <PageContent>
+        <div className="builds-list">
+          <ul className="builds-list__list">
+            {builds.map((build) => (
+              <li className="builds-list__item" key={build.id}>
+                <BuildCard buildData={build} isLink />
+              </li>
+            ))}
+          </ul>
+          {builds && builds.length ? (
+            <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />
+          ) : (
+            <p>Loading builds...</p>
+          )}
+        </div>
+      </PageContent>
     </>
   );
 };

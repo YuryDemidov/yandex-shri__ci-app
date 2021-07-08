@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const PageContent = ({ renderPageContent }) => {
+export const PageContent = ({ children }) => {
   return (
     <main className="page__content page-content">
-      <div className="container">{renderPageContent()}</div>
+      <div className="container">{children}</div>
     </main>
   );
 };
 
 PageContent.propTypes = {
-  renderPageContent: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
