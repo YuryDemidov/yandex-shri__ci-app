@@ -12,16 +12,18 @@ export const fetchBuilds = createAsyncThunk('build/list', async (_, { extra: { a
 
 export const requestBuild = createAsyncThunk(
   'build/request',
-  async ({ commitHash, history, errorHandler }, { extra: { api } }) => {
+  async ({ commitHash, history, onError, onSuccess }, { extra: { api } }) => {
     try {
       const response = await api.addBuild(commitHash);
       const newBuildId = response.data.data.id;
+
+      onSuccess();
 
       if (newBuildId) {
         history.push(`/build/${newBuildId}`);
       }
     } catch (error) {
-      errorHandler(error.response?.data || error);
+      onError(error.response?.data || error);
     }
   }
 );

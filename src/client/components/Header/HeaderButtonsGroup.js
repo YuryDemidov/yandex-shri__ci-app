@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getStateBuildData } from '../../store/buildDataSlice';
 import { requestBuild } from '../../store/buildsSlice';
+import { openModal } from '../../store/modalSlice';
 import { Button } from '../Button/Button';
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { SvgIcon } from '../Svg/SvgIcon';
 
-export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
+export const HeaderButtonsGroup = ({ buttonsSet }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const buildData = useSelector(getStateBuildData);
 
-  const runRebuild = () => {
+  const runRebuild = useCallback(() => {
     dispatch(
-      requestBuild({ commitHash: buildData.details.commitHash, history, errorHandler: (error) => console.log(error) })
+      requestBuild({ commitHash: buildData.details.commitHash, history, onError: (error) => console.log(error) })
     );
-  };
+  }, [dispatch, history, requestBuild, buildData]);
 
   return (
     <div className="page-header__buttons-group">
@@ -31,7 +32,7 @@ export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
         if (buttonType === 'build') {
           iconId = 'play';
           iconTitle = 'Run Build';
-          onClick = showBuildModal;
+          onClick = () => dispatch(openModal());
         }
 
         if (buttonType === 'rebuild') {
@@ -72,5 +73,4 @@ export const HeaderButtonsGroup = ({ buttonsSet, showBuildModal }) => {
 
 HeaderButtonsGroup.propTypes = {
   buttonsSet: PropTypes.arrayOf(PropTypes.string),
-  showBuildModal: PropTypes.func,
 };

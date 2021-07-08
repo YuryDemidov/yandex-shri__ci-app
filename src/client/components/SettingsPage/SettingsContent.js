@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -26,92 +26,95 @@ export const SettingsContent = ({ loadData }) => {
 
   const { repoName, buildCommand, mainBranch, period } = settings || {};
 
-  const saveSettings = (evt) => {
-    evt.preventDefault();
+  const saveSettings = useCallback(
+    (evt) => {
+      evt.preventDefault();
 
-    if (!isDataChanged) {
-      setMessage({
-        text: MESSAGES.ERROR.noChanges,
-        type: 'error',
-      });
-      return;
-    }
-
-    const requestBody = {};
-    const formData = new FormData(evt.target.form);
-    let isFormValid = true;
-
-    for (let [key, value] of formData) {
-      if ((key === 'repoName' || key === 'buildCommand') && !value.trim()) {
+      if (!isDataChanged) {
         setMessage({
-          text: MESSAGES.ERROR.required,
+          text: MESSAGES.ERROR.noChanges,
           type: 'error',
         });
-        setErrorInputs((state) => [...state, key]);
-        isFormValid = false;
+        return;
       }
 
-      if (key === 'period' && REGEXPS.nonNumber.test(value)) {
-        setMessage({
-          text: MESSAGES.ERROR.nonNumberPeriod,
-          type: 'error',
-        });
-        setErrorInputs((state) => [...state, key]);
-        isFormValid = false;
-      }
+      const requestBody = {};
+      const formData = new FormData(evt.target.form);
+      let isFormValid = true;
 
-      requestBody[key] = value;
-    }
-
-    if (!isFormValid) {
-      return;
-    }
-
-    // Without this defaults server responds with validation error with 400 status
-    if (!requestBody.mainBranch) {
-      requestBody.mainBranch = 'master';
-    }
-    if (!requestBody.period) {
-      requestBody.period = 60;
-    }
-
-    setIsRequestSent(true);
-
-    setMessage({
-      text: `Copying your repo. Be patient...`,
-      type: '',
-    });
-
-    dispatch(updateSettings(requestBody))
-      .then((data) => {
-        if (data.error) {
-          throw data.error;
+      for (let [key, value] of formData) {
+        if ((key === 'repoName' || key === 'buildCommand') && !value.trim()) {
+          setMessage({
+            text: MESSAGES.ERROR.required,
+            type: 'error',
+          });
+          setErrorInputs((state) => [...state, key]);
+          isFormValid = false;
         }
-        setMessage({
-          text: MESSAGES.SUCCESS.send,
-          type: 'success',
-        });
-      })
-      .catch((error) => {
-        setMessage({
-          text: error.message,
-          type: 'error',
-        });
-      })
-      .finally(() => {
-        setIsDataChanged(false);
-        setIsRequestSent(false);
-      });
-  };
 
-  const handleFormInput = () => {
+        if (key === 'period' && REGEXPS.nonNumber.test(value)) {
+          setMessage({
+            text: MESSAGES.ERROR.nonNumberPeriod,
+            type: 'error',
+          });
+          setErrorInputs((state) => [...state, key]);
+          isFormValid = false;
+        }
+
+        requestBody[key] = value;
+      }
+
+      if (!isFormValid) {
+        return;
+      }
+
+      // Without this defaults server responds with validation error with 400 status
+      if (!requestBody.mainBranch) {
+        requestBody.mainBranch = 'master';
+      }
+      if (!requestBody.period) {
+        requestBody.period = 60;
+      }
+
+      setIsRequestSent(true);
+
+      setMessage({
+        text: `Copying your repo. Be patient...`,
+        type: '',
+      });
+
+      dispatch(updateSettings(requestBody))
+        .then((data) => {
+          if (data.error) {
+            throw data.error;
+          }
+          setMessage({
+            text: MESSAGES.SUCCESS.send,
+            type: 'success',
+          });
+        })
+        .catch((error) => {
+          setMessage({
+            text: error.message,
+            type: 'error',
+          });
+        })
+        .finally(() => {
+          setIsDataChanged(false);
+          setIsRequestSent(false);
+        });
+    },
+    [dispatch]
+  );
+
+  const handleFormInput = useCallback(() => {
     setMessage({
       text: '',
       type: 'error',
     });
     setErrorInputs([]);
     setIsDataChanged(true);
-  };
+  }, [setMessage, setErrorInputs, setIsDataChanged]);
 
   return (
     <div className="settings">

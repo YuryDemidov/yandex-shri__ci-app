@@ -14,7 +14,11 @@ export const BuildsListContent = ({ builds, showMoreBuilds }) => {
           </li>
         ))}
       </ul>
-      <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />
+      {builds && builds.length ? (
+        <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />
+      ) : (
+        <p>Loading builds...</p>
+      )}
     </div>
   );
 };

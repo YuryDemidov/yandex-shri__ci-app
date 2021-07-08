@@ -4,6 +4,7 @@ import Api from '../api';
 import { INTEGRATION_TEST_PARAM } from '../../server/config';
 import { buildsReducer } from './buildsSlice';
 import { buildDataReducer } from './buildDataSlice';
+import { modalReducer } from './modalSlice';
 import { settingsReducer } from './settingsSlice';
 
 export const createStore = (options) => {
@@ -14,6 +15,7 @@ export const createStore = (options) => {
       buildData: buildDataReducer,
       builds: buildsReducer,
       settings: settingsReducer,
+      modal: modalReducer,
     },
     preloadedState: options.preloadedState,
     middleware: (getDefaultMiddleware) =>

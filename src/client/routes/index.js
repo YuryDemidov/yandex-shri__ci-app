@@ -19,6 +19,7 @@ export const clientRoutesConfig = [
   {
     path: '/',
     component: BuildsListPage,
+    exact: true,
     loadData: () => fetchBuilds(),
   },
 ];

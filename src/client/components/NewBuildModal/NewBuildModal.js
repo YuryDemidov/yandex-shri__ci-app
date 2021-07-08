@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { requestBuild } from '../../store/buildsSlice';
+import { closeModal, getModalState, hideModalError, showModalError } from '../../store/modalSlice';
 import { Button } from '../Button/Button';
 import { TextInput } from '../TextInput/TextInput';
 import { MESSAGES } from '../../assets/js/utils/messages';
@@ -11,35 +11,46 @@ import { MESSAGES } from '../../assets/js/utils/messages';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NewBuildModal.module.scss';
 
-export const NewBuildModal = ({ closeModal }) => {
+export const NewBuildModal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errorMessage, setErrorMessage] = useState('');
-
+  const { errorMessage } = useSelector(getModalState);
   useStyles(styles);
 
-  const closeModalHandler = () => {
-    closeModal();
-    setErrorMessage('');
+  const close = useCallback(() => {
+    dispatch(closeModal());
+  }, [dispatch, closeModal]);
+
+  const showError = (text) => {
+    dispatch(showModalError(text));
   };
 
-  const runBuild = (evt) => {
-    evt.preventDefault();
-    const commitHash = evt.target.form.commitHash.value;
+  const runBuild = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      const commitHash = evt.target.form.commitHash.value;
 
-    if (!commitHash) {
-      setErrorMessage(MESSAGES.ERROR.required);
-      return;
-    }
+      if (!commitHash) {
+        showError(MESSAGES.ERROR.required);
+        return;
+      }
 
-    dispatch(requestBuild({ commitHash, history, errorHandler: (error) => setErrorMessage(error.message || error) }));
-    // closeModalHandler();
-  };
+      dispatch(
+        requestBuild({
+          commitHash,
+          history,
+          onError: (error) => showError(error.message || error),
+          onSuccess: close,
+        })
+      );
+    },
+    [dispatch, history, requestBuild, showError, close]
+  );
 
   return (
     <>
       <h3 className="modal__title">New build</h3>
-      <form className="modal__form" onInput={() => setErrorMessage('')}>
+      <form className="modal__form" onInput={() => dispatch(hideModalError())}>
         <TextInput
           id="commitHash"
           className={`modal__input${errorMessage ? ' text-input_invalid' : ''}`}
@@ -51,14 +62,10 @@ export const NewBuildModal = ({ closeModal }) => {
         />
         <div className="modal__buttons">
           <Button content="Run build" modifiers={['primary']} type="submit" clickHandler={runBuild} />
-          <Button content="Cancel" modifiers={['secondary']} clickHandler={closeModalHandler} />
+          <Button content="Cancel" modifiers={['secondary']} clickHandler={close} />
         </div>
         {errorMessage && <p className="message message_error">{errorMessage}</p>}
       </form>
     </>
   );
-};
-
-NewBuildModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ import { Preloader } from '../Preloader/Preloader';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildsList.module.scss';
 
-export const BuildsListPage = ({ loadData, showBuildModal }) => {
+export const BuildsListPage = ({ loadData }) => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const builds = useSelector(getStateBuilds);
@@ -33,18 +33,16 @@ export const BuildsListPage = ({ loadData, showBuildModal }) => {
     return <Preloader />;
   }
 
-  const showMoreBuilds = () => {
+  const showMoreBuilds = useCallback(() => {
     // Mock logic of loading new builds from server
     // setBuilds((state) => [...state, ...state]);
-  };
+  }, []);
 
   return (
     <>
       <PageHeader
         renderHeaderLeft={() => <HeaderTitle text={settings.repoName} />}
-        renderHeaderRight={() => (
-          <HeaderButtonsGroup buttonsSet={['build', 'settings']} showBuildModal={showBuildModal} />
-        )}
+        renderHeaderRight={() => <HeaderButtonsGroup buttonsSet={['build', 'settings']} />}
       />
       <PageContent renderPageContent={() => <BuildsListContent builds={builds} showMoreBuilds={showMoreBuilds} />} />
     </>
@@ -53,5 +51,4 @@ export const BuildsListPage = ({ loadData, showBuildModal }) => {
 
 BuildsListPage.propTypes = {
   loadData: PropTypes.func.isRequired,
-  showBuildModal: PropTypes.func.isRequired,
 };
