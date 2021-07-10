@@ -9,8 +9,8 @@ import { HeaderTitle } from '../Header/HeaderTitle';
 import { PageContent } from '../PageContent/PageContent';
 import { PageHeader } from '../PageHeader/PageHeader';
 import { TextInput } from '../TextInput/TextInput';
-import { MESSAGES } from '../../assets/js/utils/messages';
-import { REGEXPS } from '../../assets/js/utils/regexps';
+import { MESSAGES } from '../../assets/js/utils/constants/messages';
+import { REGEXPS } from '../../assets/js/utils/constants/regexps';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Settings.module.scss';

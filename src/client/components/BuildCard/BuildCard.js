@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { Preloader } from '../Preloader/Preloader';
 import { SvgIcon } from '../Svg/SvgIcon';
-import { formatDateOutput, formatDurationOutput } from '../../assets/js/utils/functions/dateFormatter';
+import { formatDateOutput, formatDurationOutput } from '../../assets/js/utils/functions/dateFormatter.mjs';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildCard.module.scss';
