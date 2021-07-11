@@ -17,7 +17,7 @@ export const requestBuild = createAsyncThunk(
       const response = await api.addBuild(commitHash);
       const newBuildId = response.data.data.id;
 
-      onSuccess();
+      onSuccess && onSuccess();
 
       if (newBuildId) {
         history.push(`/build/${newBuildId}`);
