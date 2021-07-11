@@ -48,6 +48,7 @@ export const SettingsPage = ({ loadData }) => {
       const requestBody = {};
       const formData = new FormData(evt.target.form);
       let isFormValid = true;
+      let hasRepoChanged = false;
 
       for (let [key, value] of formData) {
         if ((key === 'repoName' || key === 'buildCommand') && !value.trim()) {
@@ -57,6 +58,10 @@ export const SettingsPage = ({ loadData }) => {
           });
           setErrorInputs((state) => [...state, key]);
           isFormValid = false;
+        }
+
+        if (key === 'repoName') {
+          hasRepoChanged = value !== repoName;
         }
 
         if (key === 'period' && REGEXPS.nonNumber.test(value)) {
@@ -85,10 +90,11 @@ export const SettingsPage = ({ loadData }) => {
 
       setIsRequestSent(true);
 
-      setMessage({
-        text: `Copying your repo. Be patient...`,
-        type: '',
-      });
+      hasRepoChanged &&
+        setMessage({
+          text: `Copying your repo. Be patient...`,
+          type: '',
+        });
 
       dispatch(updateSettings(requestBody))
         .then((data) => {
