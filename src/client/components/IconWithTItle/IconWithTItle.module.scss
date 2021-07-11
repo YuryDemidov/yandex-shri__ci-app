@@ -1,0 +1,17 @@
+.icon-with-title {
+  &,
+  &__icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    justify-content: center;
+  }
+
+  &__title {
+    margin-left: 0.4rem;
+
+    white-space: nowrap;
+  }
+}

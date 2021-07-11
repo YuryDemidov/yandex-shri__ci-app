@@ -1,0 +1,37 @@
+.page-footer {
+  background-color: var(--gray-bg-color);
+
+  &__content {
+    padding: 1.2rem 0;
+
+    line-height: 1.4;
+    letter-spacing: 0.006rem;
+  }
+
+  &__links {
+    display: flex;
+    margin-bottom: 0.8rem;
+  }
+
+  &__link {
+    margin-right: 1.2rem;
+  }
+
+  &__copyright {
+    color: var(--gray-text-color);
+  }
+}
+
+@media (min-width: 576px) {
+  .page-footer {
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.7rem 0;
+    }
+
+    &__links {
+      margin-bottom: 0;
+    }
+  }
+}

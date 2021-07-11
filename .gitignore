@@ -1,5 +1,8 @@
 # Project specific
 repository
+images
+hermione/html-reporter
+selenium-log
 
 # Logs
 logs

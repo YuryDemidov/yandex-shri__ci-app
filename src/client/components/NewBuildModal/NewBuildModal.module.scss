@@ -1,0 +1,19 @@
+.new-build-modal {
+  max-width: 48.5rem;
+  width: 100%;
+
+  .text-input {
+    margin-bottom: 1.2rem;
+
+    &_required {
+      .text-input__label_before {
+        margin-top: 0;
+        margin-bottom: 1.2rem;
+
+        &::after {
+          content: none;
+        }
+      }
+    }
+  }
+}

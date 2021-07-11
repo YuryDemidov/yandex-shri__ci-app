@@ -1,30 +1,84 @@
 {
-  "name": "shri-03-node-js",
-  "version": "1.0.0",
-  "description": "Homework for Yandex frontend school. Part 3. Node JS.",
-  "main": "index.js",
+  "name": "shri-ci-server",
+  "version": "2.0.0",
+  "description": "Homework for Yandex frontend school. Parts 3-5. Node JS, React I, React II.",
+  "main": "src/server/index.js",
   "scripts": {
-    "start": "node src/server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cross-env NODE_ENV=production webpack",
+    "server": "nodemon -w dist dist/server.js",
+    "start": "cross-env NODE_ENV=development webpack serve",
+    "test:unit": "mocha",
+    "test:integration": "hermione",
+    "test:integration:2": "hermione --integration-test=2",
+    "test:integration-gui": "hermione gui",
+    "test:integration-gui:2": "hermione gui --integration-test=2"
   },
   "author": "Iurii Demidov",
   "license": "MIT",
-  "engines": {
-    "node": "16.3.0"
-  },
   "devDependencies": {
-    "eslint": "^7.28.0",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "@reduxjs/toolkit": "^1.6.0",
+    "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "delay": "^5.0.0",
+    "eslint": "^7.29.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-webpack-plugin": "^2.5.4",
+    "hermione": "^4.1.1",
+    "hermione-selenium-standalone-runner": "git+ssh://git@github.com/YuryDemidov/hermione-selenium-standalone-runner.git",
+    "hermione-url-decorator": "git+ssh://git@github.com/YuryDemidov/hermione-url-decorator.git",
+    "html-loader": "2.1.2",
+    "html-reporter": "^7.0.2",
+    "html-webpack-plugin": "^5.3.2",
     "husky": "^6.0.0",
+    "isomorphic-style-loader": "^5.1.0",
     "lint-staged": "^11.0.0",
-    "prettier": "^2.3.1"
+    "mocha": "^9.0.2",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.1",
+    "prop-types": "^15.7.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "serialize-javascript": "^6.0.0",
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   },
+  "dependencies": {
+    "ansi-to-html": "^0.6.15",
+    "autoprefixer": "^10.2.6",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "css-loader": "^5.2.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "history": "^5.0.0",
+    "mini-css-extract-plugin": "^1.6.0",
+    "postcss-loader": "^6.1.0",
+    "process": "^0.11.10",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.0.0"
+  },
+  "browserslist": [
+    ">1%",
+    "last 3 versions",
+    "Firefox ESR",
+    "not ie < 11"
+  ],
+  "engines": {
+    "node": "14.17.0"
+  },
+  "engineStrict": true,
   "lint-staged": {
     "*.js": "eslint --fix",
     "*.{js,css,md}": "prettier --write"
-  },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1"
   }
 }

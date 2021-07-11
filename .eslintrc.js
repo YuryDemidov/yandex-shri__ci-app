@@ -5,9 +5,19 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: 'eslint:recommended',
+  extends: ['plugin:react/recommended', 'eslint:recommended'],
+  plugins: ['import', 'promise', 'node'],
   parserOptions: {
-    ecmaVersion: 12,
+    sourceType: 'module',
+    ecmaFeatures: {
+      impliedStrict: true,
+      jsx: true,
+    },
   },
   rules: {},
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };
