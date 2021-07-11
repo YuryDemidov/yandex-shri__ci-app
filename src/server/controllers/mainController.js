@@ -40,8 +40,8 @@ export const mainController = async (req, res) => {
     queryParams: req.query,
   });
 
-  const matchedRoute = clientRoutesConfig.find((route) => matchPath(req.url, route));
-  const { params } = matchPath(req.url, matchedRoute);
+  const matchedRoute = clientRoutesConfig.find((route) => matchPath(req.path, route));
+  const { params } = matchPath(req.path, matchedRoute);
   if (matchedRoute && matchedRoute.loadData) {
     await store.dispatch(matchedRoute.loadData(params));
   }

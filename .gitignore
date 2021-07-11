@@ -2,7 +2,6 @@
 repository
 images
 hermione/html-reporter
-hermione/screens
 selenium-log
 
 # Logs
