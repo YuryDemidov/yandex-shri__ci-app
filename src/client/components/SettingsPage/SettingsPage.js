@@ -36,12 +36,14 @@ export const SettingsPage = ({ loadData }) => {
   const saveSettings = useCallback(
     (evt) => {
       evt.preventDefault();
+      window.performance.mark('settings-submit-start');
 
       if (!isDataChanged) {
         setMessage({
           text: MESSAGES.ERROR.noChanges,
           type: 'error',
         });
+        window.performance.clearMarks();
         return;
       }
 
@@ -77,6 +79,7 @@ export const SettingsPage = ({ loadData }) => {
       }
 
       if (!isFormValid) {
+        window.performance.clearMarks();
         return;
       }
 
@@ -96,6 +99,14 @@ export const SettingsPage = ({ loadData }) => {
           type: '',
         });
 
+      window.performance.mark('settings-submit-end');
+      window.perf_counter.send(
+        'settingsSubmit',
+        +window.performance
+          .measure('settings-submit', 'settings-submit-start', 'settings-submit-end')
+          .duration.toFixed(3)
+      );
+
       dispatch(updateSettings(requestBody))
         .then((data) => {
           if (data.error) {
@@ -113,11 +124,20 @@ export const SettingsPage = ({ loadData }) => {
           });
         })
         .finally(() => {
+          window.performance.mark('settings-response');
+          window.perf_counter.send(
+            'settingsChange',
+            +window.performance
+              .measure('settings-change', 'settings-submit-start', 'settings-response')
+              .duration.toFixed(3)
+          );
+          window.performance.clearMarks();
+
           setIsDataChanged(false);
           setIsRequestSent(false);
         });
     },
-    [dispatch]
+    [dispatch, setMessage, setIsDataChanged, setIsRequestSent, isDataChanged]
   );
 
   const handleFormInput = useCallback(() => {
@@ -127,7 +147,7 @@ export const SettingsPage = ({ loadData }) => {
     });
     setErrorInputs([]);
     setIsDataChanged(true);
-  }, [setMessage, setErrorInputs, setIsDataChanged]);
+  }, [setMessage, setErrorInputs, isDataChanged, setIsDataChanged]);
 
   return (
     <>

@@ -38,7 +38,21 @@ const styleLoaders = (isModule) => {
 };
 
 const plugins = (...extra) => {
-  return [new HtmlWebpackPlugin(), isDev ? new ESLintWebpackPlugin() : null, ...extra];
+  const plugins = [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || '1'),
+    }),
+  ];
+
+  if (isDev) {
+    plugins.push(new ESLintWebpackPlugin());
+  } else {
+    plugins.push(new MiniCssExtractPlugin());
+  }
+
+  plugins.push(...extra);
+
+  return plugins;
 };
 
 const commonConfigParts = {
@@ -94,9 +108,18 @@ const serverConfig = {
 const clientConfig = {
   ...commonConfigParts,
   entry: {
+    analytics: path.join(__dirname, 'src', 'client', 'metrics', 'analytics'),
+    metrics: path.join(__dirname, 'src', 'client', 'metrics'),
     index: ['webpack-dev-server/client?http://localhost:8080', path.join(__dirname, 'src', 'client')],
   },
   plugins: plugins(
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'client', 'metrics', 'analytics.html'),
+      filename: 'analytics.html',
+      chunks: ['analytics'],
+      inject: 'body',
+      minify: true,
+    }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
     })

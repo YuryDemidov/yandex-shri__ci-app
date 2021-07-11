@@ -4,6 +4,7 @@
   "description": "Homework for Yandex frontend school. Parts 3-5. Node JS, React I, React II.",
   "main": "src/server/index.js",
   "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
     "server": "nodemon -w dist dist/server.js",
     "start": "cross-env NODE_ENV=development webpack serve",
     "test:unit": "mocha",

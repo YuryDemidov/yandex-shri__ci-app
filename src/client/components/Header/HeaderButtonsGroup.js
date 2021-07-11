@@ -9,11 +9,32 @@ import { openModal } from '../../store/modalSlice';
 import { Button } from '../Button/Button';
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { SvgIcon } from '../Svg/SvgIcon';
+import { isServer } from '../../../server/utils/isServer';
 
 export const HeaderButtonsGroup = ({ buttonsSet }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const buildData = useSelector(getStateBuildData);
+  const modalAnimationTime = 500; // ms
+
+  const countPerformance = () => {
+    window.performance.mark('modal-open-end');
+    window.perf_counter.send(
+      'modalOpenDelay',
+      +window.performance.measure('modal-opening', 'modal-open-start', 'modal-open-end').duration.toFixed(3) -
+        modalAnimationTime
+    );
+    window.performance.clearMarks();
+    document.querySelector('.modal').removeEventListener('animationend', countPerformance);
+  };
+
+  const runBuild = useCallback(() => {
+    if (!isServer()) {
+      window.performance.mark('modal-open-start');
+      document.querySelector('.modal').addEventListener('animationend', countPerformance);
+    }
+    return dispatch(openModal());
+  }, [dispatch, openModal]);
 
   const runRebuild = useCallback(() => {
     dispatch(
@@ -32,7 +53,7 @@ export const HeaderButtonsGroup = ({ buttonsSet }) => {
         if (buttonType === 'build') {
           iconId = 'play';
           iconTitle = 'Run Build';
-          onClick = () => dispatch(openModal());
+          onClick = runBuild;
         }
 
         if (buttonType === 'rebuild') {
