@@ -1,7 +1,7 @@
 {
   "name": "shri-ci-server",
   "version": "2.0.0",
-  "description": "Homework for Yandex frontend school. Parts 3-5. Node JS, React I, React II.",
+  "description": "Homework for Yandex frontend school. CI App. Parts 1-6. Node JS, React I, React II, Testing, Performance, Typescript.",
   "main": "src/server/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
@@ -20,6 +20,8 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "@reduxjs/toolkit": "^1.6.0",
+    "@types/react": "^17.0.14",
+    "@types/react-redux": "^7.1.18",
     "babel-loader": "^8.2.2",
     "cross-env": "^7.0.3",
     "delay": "^5.0.0",
@@ -47,6 +49,8 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "serialize-javascript": "^6.0.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
     "webpack": "^5.40.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
