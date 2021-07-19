@@ -10,7 +10,6 @@ import { PageContent } from '../PageContent/PageContent';
 import { PageHeader } from '../PageHeader/PageHeader';
 import { TextInput } from '../TextInput/TextInput';
 import { MESSAGES } from '../../assets/js/utils/constants/messages';
-import { REGEXPS } from '../../assets/js/utils/constants/regexps';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Settings.module.scss';
@@ -66,7 +65,7 @@ export const SettingsPage = ({ loadData }) => {
           hasRepoChanged = value !== repoName;
         }
 
-        if (key === 'period' && REGEXPS.nonNumber.test(value)) {
+        if (key === 'period' && /\D/.test(value)) {
           setMessage({
             text: MESSAGES.ERROR.nonNumberPeriod,
             type: 'error',
