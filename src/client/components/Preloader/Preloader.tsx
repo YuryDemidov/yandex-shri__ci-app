@@ -5,7 +5,7 @@ import { SvgIcon } from '../Svg/SvgIcon';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Preloader.module.scss';
 
-export const Preloader = () => {
+export const Preloader = (): JSX.Element => {
   useStyles(styles);
 
   return (

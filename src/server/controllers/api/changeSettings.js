@@ -1,6 +1,6 @@
 import getConfig from '../db/getConfig';
 import changeConfig from '../db/changeConfig';
-import isConfigSchemaValid from '../../validators/middlewares/isConfigSchemaValid';
+import isConfigSchemaValid from '../../validators/isConfigSchemaValid';
 import GitExecutor from '../../utils/gitExecutor';
 import { BadRequestApiError } from '../../validators/errors/ApiError';
 import { REPO_PATH } from '../../config';

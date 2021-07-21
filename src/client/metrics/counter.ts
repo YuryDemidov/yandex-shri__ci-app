@@ -1,18 +1,26 @@
+import { MetricsSampleAdditional } from './analytics';
+
 /**
  * Лимит на число счетчиков в одном запросе
- *
- * @type {Number}
  */
-const MAX_BATCH_COUNTERS = 42;
+const MAX_BATCH_COUNTERS: number = 42;
 
 /**
  * Интервал в миллисекундах, в течение которого счётчики склеиваются
- *
- * @type {Number}
  */
-const COUNTERS_BATCH_TIMEOUT = 15;
+const COUNTERS_BATCH_TIMEOUT: number = 15;
 
 export default class Counter {
+  guid: string;
+  reqid: string;
+  page: string;
+  additional: MetricsSampleAdditional;
+  _initiated: boolean;
+  _indexes: any;
+  _countersBatchData: any;
+  _counterTimerId: number | unknown;
+  counterUrl: string;
+
   constructor() {
     this.guid = '';
     this.reqid = '';
@@ -27,7 +35,7 @@ export default class Counter {
     this.counterUrl = 'https://shri.yandex/hw/stat/send';
   }
 
-  init(guid, reqid, page) {
+  init(guid: string, reqid: string, page: string) {
     if (guid && reqid && page) {
       this.guid = guid;
       this.reqid = reqid;
@@ -37,25 +45,22 @@ export default class Counter {
     }
   }
 
-  setAdditionalParams(additionalParams) {
+  setAdditionalParams(additionalParams: MetricsSampleAdditional) {
     this.additional = Object.assign({}, additionalParams);
   }
 
   /**
    * Отправка счётчика. Основной транспорт - sendBeacon, запасной - XMLHttpRequest. Быстро поступающие одиночные события
    * накапливаются и отправляются пачками по MAX_BATCH_COUNTERS штук.
-   *
-   * @param {String} name
-   * @param {Number} value
    */
-  send(name, value) {
+  send(name: string, value: number) {
     if (!this._initiated) {
       console.warn('counter is not initiated');
 
       return;
     }
 
-    clearTimeout(this._counterTimerId);
+    typeof this._counterTimerId === 'number' && window.clearTimeout(this._counterTimerId);
 
     if (!this._indexes[name]) {
       this._indexes[name] = 0;
@@ -77,7 +82,7 @@ export default class Counter {
     this._indexes[name]++;
 
     if (this._countersBatchData.length < MAX_BATCH_COUNTERS) {
-      this._counterTimerId = setTimeout(function () {
+      this._counterTimerId = window.setTimeout(function () {
         self.sendBatchRequest();
       }, COUNTERS_BATCH_TIMEOUT);
     } else {
@@ -91,10 +96,10 @@ export default class Counter {
     this._countersBatchData = [];
     this._counterTimerId = null;
 
-    const sendBeaconPostAvailable = navigator.sendBeacon,
-      sendBeaconResult =
-        sendBeaconPostAvailable &&
-        navigator.sendBeacon(this.counterUrl, new Blob([data], { type: 'application/json' }));
+    const sendBeaconPostAvailable = () => navigator.sendBeacon;
+    const sendBeaconResult =
+      sendBeaconPostAvailable() &&
+      navigator.sendBeacon(this.counterUrl, new Blob([data], { type: 'application/json' }));
 
     if (!sendBeaconResult) {
       const xhr = new XMLHttpRequest();

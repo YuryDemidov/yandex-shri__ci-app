@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { getStateBuildData } from '../../store/buildDataSlice';
 import { requestBuild } from '../../store/buildsSlice';
@@ -11,7 +10,11 @@ import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { SvgIcon } from '../Svg/SvgIcon';
 import { isServer } from '../../../server/utils/isServer';
 
-export const HeaderButtonsGroup = ({ buttonsSet }) => {
+interface HeaderButtonsGroupProps {
+  buttonsSet?: string[];
+}
+
+export const HeaderButtonsGroup = ({ buttonsSet }: HeaderButtonsGroupProps): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
   const buildData = useSelector(getStateBuildData);
@@ -25,26 +28,29 @@ export const HeaderButtonsGroup = ({ buttonsSet }) => {
         modalAnimationTime
     );
     window.performance.clearMarks();
-    document.querySelector('.modal').removeEventListener('animationend', countPerformance);
+    const modal = document.querySelector('.modal');
+    modal && modal.removeEventListener('animationend', countPerformance);
   };
 
   const runBuild = useCallback(() => {
     if (!isServer()) {
       window.performance.mark('modal-open-start');
-      document.querySelector('.modal').addEventListener('animationend', countPerformance);
+      const modal = document.querySelector('.modal');
+      modal && modal.addEventListener('animationend', countPerformance);
     }
     return dispatch(openModal());
   }, [dispatch, openModal]);
 
   const runRebuild = useCallback(() => {
     dispatch(
+      // @ts-ignore
       requestBuild({ commitHash: buildData.details.commitHash, history, onError: (error) => console.log(error) })
     );
   }, [dispatch, history, requestBuild, buildData]);
 
   return (
     <div className="page-header__buttons-group">
-      {buttonsSet.map((buttonType) => {
+      {buttonsSet?.map((buttonType) => {
         let iconId = buttonType;
         let iconTitle = buttonType[0].toUpperCase() + buttonType.substring(1);
         let titleClass = 'hidden_mobile';
@@ -90,8 +96,4 @@ export const HeaderButtonsGroup = ({ buttonsSet }) => {
       })}
     </div>
   );
-};
-
-HeaderButtonsGroup.propTypes = {
-  buttonsSet: PropTypes.arrayOf(PropTypes.string),
 };

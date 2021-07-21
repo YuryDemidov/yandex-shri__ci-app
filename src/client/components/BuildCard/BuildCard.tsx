@@ -1,16 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { IconWithTitle } from '../IconWithTItle/IconWithTitle';
 import { Preloader } from '../Preloader/Preloader';
 import { SvgIcon } from '../Svg/SvgIcon';
+// @ts-ignore
 import { formatDateOutput, formatDurationOutput } from '../../assets/js/utils/functions/dateFormatter.mjs';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildCard.module.scss';
+import { DbBuildModel } from '../../api/types';
 
-export const BuildCard = ({ buildData: build, isLink }) => {
+interface BuildCardProps {
+  buildData: DbBuildModel;
+  isLink?: boolean;
+}
+
+export const BuildCard = ({ buildData: build, isLink }: BuildCardProps): JSX.Element => {
   useStyles(styles);
 
   if (!build.id) {
@@ -69,20 +75,4 @@ export const BuildCard = ({ buildData: build, isLink }) => {
   ) : (
     <div className="build-card">{buildCardContent}</div>
   );
-};
-
-BuildCard.propTypes = {
-  buildData: PropTypes.exact({
-    id: PropTypes.string,
-    configurationId: PropTypes.string,
-    buildNumber: PropTypes.number,
-    commitMessage: PropTypes.string,
-    commitHash: PropTypes.string,
-    branchName: PropTypes.string,
-    authorName: PropTypes.string,
-    status: PropTypes.oneOf(['Waiting', 'InProgress', 'Success', 'Fail', 'Canceled']),
-    start: PropTypes.string,
-    duration: PropTypes.number,
-  }),
-  isLink: PropTypes.bool,
 };

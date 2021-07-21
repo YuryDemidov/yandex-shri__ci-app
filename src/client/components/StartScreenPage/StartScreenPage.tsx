@@ -11,7 +11,7 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import buttonStyles from '../Button/Button.module.scss';
 import styles from './StartScreen.module.scss';
 
-export const StartScreenPage = () => {
+export const StartScreenPage = (): JSX.Element => {
   useStyles(styles);
   useStyles(buttonStyles);
 

@@ -1,10 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './IconWithTItle.module.scss';
 
-export const IconWithTitle = ({ icon, title, additionalTitle, titleClass, ariaHidden }) => {
+interface IconWithTitleProps {
+  icon: React.ReactNode;
+  title: React.ReactNode;
+  additionalTitle?: string;
+  titleClass?: string;
+  ariaHidden?: boolean;
+}
+
+export const IconWithTitle = ({
+  icon,
+  title,
+  additionalTitle,
+  titleClass,
+  ariaHidden,
+}: IconWithTitleProps): JSX.Element => {
   useStyles(styles);
 
   return (
@@ -12,7 +25,7 @@ export const IconWithTitle = ({ icon, title, additionalTitle, titleClass, ariaHi
       <span className="icon-with-title__icon">{icon}</span>
       <span
         className={`icon-with-title__title${titleClass ? ` ${titleClass}` : ''}`}
-        aria-hidden={ariaHidden ? 'true' : null}
+        aria-hidden={ariaHidden && 'true'}
       >
         {title}
       </span>
@@ -21,12 +34,4 @@ export const IconWithTitle = ({ icon, title, additionalTitle, titleClass, ariaHi
       )}
     </span>
   );
-};
-
-IconWithTitle.propTypes = {
-  icon: PropTypes.element.isRequired,
-  title: PropTypes.string.isRequired,
-  additionalTitle: PropTypes.string,
-  titleClass: PropTypes.string,
-  ariaHidden: PropTypes.bool,
 };

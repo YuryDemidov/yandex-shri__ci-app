@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { Modal } from '../Modal/Modal';
 import { closeModal } from '../../store/modalSlice';
@@ -8,7 +7,12 @@ import { closeModal } from '../../store/modalSlice';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ModalWrap.module.scss';
 
-export const ModalWrap = ({ modal, modalClass }) => {
+interface ModalWrapProps {
+  modal?: React.ReactNode;
+  modalClass?: string;
+}
+
+export const ModalWrap = ({ modal, modalClass }: ModalWrapProps): JSX.Element => {
   const dispatch = useDispatch();
   useStyles(styles);
 
@@ -18,9 +22,4 @@ export const ModalWrap = ({ modal, modalClass }) => {
       <Modal modalContent={modal} modalClass={modalClass} />
     </div>
   );
-};
-
-ModalWrap.propTypes = {
-  modal: PropTypes.element,
-  modalClass: PropTypes.string,
 };

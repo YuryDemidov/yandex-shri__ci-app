@@ -1,10 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Button.module.scss';
 
-export const Button = ({ content, modifiers = [], type = 'button', disabled, ariaLabel, clickHandler }) => {
+interface ButtonProps {
+  content: React.ReactNode;
+  modifiers?: string[];
+  type?: 'submit' | 'button';
+  disabled?: boolean;
+  ariaLabel?: string;
+  clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+export const Button = ({
+  content,
+  modifiers = [],
+  type = 'button',
+  disabled,
+  ariaLabel,
+  clickHandler,
+}: ButtonProps): JSX.Element => {
   useStyles(styles);
 
   return (
@@ -18,13 +33,4 @@ export const Button = ({ content, modifiers = [], type = 'button', disabled, ari
       <span className="button__content">{content}</span>
     </button>
   );
-};
-
-Button.propTypes = {
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
-  type: PropTypes.oneOf(['submit', 'button']),
-  disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string,
-  clickHandler: PropTypes.func,
 };

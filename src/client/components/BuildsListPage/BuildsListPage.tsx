@@ -16,7 +16,14 @@ import { StartScreenPage } from '../StartScreenPage/StartScreenPage';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildsList.module.scss';
 
-export const BuildsListPage = ({ loadData }) => {
+import { DbBuildModel } from '../../api/types';
+
+interface BuildsListPageProps {
+  // ToDO
+  loadData: () => void;
+}
+
+export const BuildsListPage = ({ loadData }: BuildsListPageProps): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const builds = useSelector(getStateBuilds);
@@ -48,11 +55,13 @@ export const BuildsListPage = ({ loadData }) => {
       <PageContent>
         <div className="builds-list">
           <ul className="builds-list__list">
-            {builds.map((build) => (
-              <li className="builds-list__item" key={build.id}>
-                <BuildCard buildData={build} isLink />
-              </li>
-            ))}
+            {builds.map((build: DbBuildModel) => {
+              return (
+                <li className="builds-list__item" key={build.id}>
+                  <BuildCard buildData={build} isLink />
+                </li>
+              );
+            })}
           </ul>
           {builds && builds.length ? (
             <Button content="Show more" modifiers={['secondary']} clickHandler={showMoreBuilds} />

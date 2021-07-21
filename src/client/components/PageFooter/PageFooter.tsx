@@ -3,7 +3,7 @@ import React from 'react';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PageFooter.module.scss';
 
-export const PageFooter = () => {
+export const PageFooter = (): JSX.Element => {
   useStyles(styles);
 
   return (

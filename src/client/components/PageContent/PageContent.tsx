@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export const PageContent = ({ children }) => {
+interface PageContentProps {
+  children: React.ReactNode;
+}
+
+export const PageContent = ({ children }: PageContentProps): JSX.Element => {
   return (
     <main className="page__content page-content">
       <div className="container">{children}</div>
     </main>
   );
-};
-
-PageContent.propTypes = {
-  children: PropTypes.element.isRequired,
 };

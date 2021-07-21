@@ -1,10 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Modal.module.scss';
 
-export const Modal = ({ modalContent, modalClass }) => {
+interface ModalProps {
+  modalContent?: React.ReactNode;
+  modalClass?: string;
+}
+
+export const Modal = ({ modalContent, modalClass }: ModalProps): JSX.Element => {
   useStyles(styles);
 
   return (
@@ -12,9 +16,4 @@ export const Modal = ({ modalContent, modalClass }) => {
       <div className="modal__content">{modalContent}</div>
     </div>
   );
-};
-
-Modal.propTypes = {
-  modalContent: PropTypes.element,
-  modalClass: PropTypes.string,
 };

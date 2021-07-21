@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import StyleContext from 'isomorphic-style-loader/StyleContext';
+import StyleContext, { InsertCSS } from 'isomorphic-style-loader/StyleContext';
 
 import { App } from './components/App/App';
 import { createStore } from './store';
 
-const insertCss = (...styles) => {
+declare global {
+  interface Window {
+    __SERVER_STATE: JSON;
+  }
+}
+
+const insertCss: InsertCSS = (...styles) => {
   const removeCss = styles.map((style) => style._insertCss());
   return () => removeCss.forEach((dispose) => dispose());
 };

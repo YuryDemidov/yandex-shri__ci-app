@@ -1,10 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PageHeader.module.scss';
 
-export const PageHeader = ({ renderHeaderLeft, renderHeaderRight }) => {
+type RenderFunction = () => React.ReactNode;
+
+interface PageHeaderProps {
+  renderHeaderLeft: RenderFunction;
+  renderHeaderRight: RenderFunction;
+}
+
+export const PageHeader = ({ renderHeaderLeft, renderHeaderRight }: PageHeaderProps): JSX.Element => {
   useStyles(styles);
 
   return (
@@ -17,9 +23,4 @@ export const PageHeader = ({ renderHeaderLeft, renderHeaderRight }) => {
       </div>
     </header>
   );
-};
-
-PageHeader.propTypes = {
-  renderHeaderLeft: PropTypes.func.isRequired,
-  renderHeaderRight: PropTypes.func.isRequired,
 };

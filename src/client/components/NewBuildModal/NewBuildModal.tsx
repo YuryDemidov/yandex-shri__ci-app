@@ -11,7 +11,7 @@ import { MESSAGES } from '../../assets/js/utils/constants/messages';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NewBuildModal.module.scss';
 
-export const NewBuildModal = () => {
+export const NewBuildModal = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { errorMessage } = useSelector(getModalState);
@@ -21,7 +21,8 @@ export const NewBuildModal = () => {
     dispatch(closeModal());
   }, [dispatch, closeModal]);
 
-  const showError = (text) => {
+  const showError = (text: string | Error) => {
+    // @ts-ignore
     dispatch(showModalError(text));
   };
 
@@ -36,10 +37,11 @@ export const NewBuildModal = () => {
       }
 
       dispatch(
+        // @ts-ignore
         requestBuild({
           commitHash,
           history,
-          onError: (error) => showError(error.message || error),
+          onError: (error: Error) => showError(error.message || error),
           onSuccess: close,
         })
       );

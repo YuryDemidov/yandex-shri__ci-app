@@ -15,15 +15,15 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import normalizeStyles from './normalize.scss';
 import styles from './App.module.scss';
 
-export const App = () => {
+export const App = (): JSX.Element => {
   const { isOpened: isModalOpened } = useSelector(getModalState);
   const modal = isModalOpened ? <NewBuildModal /> : null;
   useStyles(styles);
   useStyles(normalizeStyles);
 
-  let scrollSequence = [];
+  let scrollSequence: number[] = [];
   let firstTenScrollTicksTiming = 0;
-  const scrollHandler = (evt) => {
+  const scrollHandler = (evt: Event) => {
     if (scrollSequence.length < 11) {
       scrollSequence.push(evt.timeStamp);
       return;

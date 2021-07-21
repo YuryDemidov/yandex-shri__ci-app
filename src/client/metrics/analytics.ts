@@ -1,6 +1,24 @@
 import { COUNTER_ID } from '../../server/config';
 
-function quantile(arr, q) {
+interface MetricsRawData {
+  data: MetricsSample[];
+}
+
+interface MetricsSample {
+  date: string;
+  timestamp: string;
+  page: string;
+  name: string;
+  requestId: string;
+  value: number;
+  additional: MetricsSampleAdditional;
+}
+
+export interface MetricsSampleAdditional {
+  [key: string]: string;
+}
+
+function quantile(arr: any[], q: number) {
   const sorted = arr.sort((a, b) => a - b);
   const pos = (sorted.length - 1) * q;
   const base = Math.floor(pos);
@@ -13,7 +31,7 @@ function quantile(arr, q) {
   }
 }
 
-function prepareData(result) {
+function prepareData(result: MetricsRawData) {
   return result.data.map((item) => {
     item.date = item.timestamp.split('T')[0];
 
@@ -22,7 +40,7 @@ function prepareData(result) {
 }
 
 // показать значение метрики за несколько день
-function showMetricByPeriod(data, page, name, startDate, endDate) {
+function showMetricByPeriod(data: MetricsSample[], page: string, name: string, startDate: string, endDate: string) {
   const sampleData = data
     .filter((item) => item.page === page && item.name === name && item.date >= startDate && item.date <= endDate)
     .map((item) => item.value);
@@ -34,7 +52,7 @@ function showMetricByPeriod(data, page, name, startDate, endDate) {
 }
 
 // показать сессию пользователя
-function showSession(data, requestId, date) {
+function showSession(data: MetricsSample[], requestId: string, date: string) {
   const sampleData = data.filter((item) => item.requestId === requestId && item.date === date);
   let output = `Session ${requestId}\n${date}:`;
 
@@ -48,8 +66,8 @@ function showSession(data, requestId, date) {
 }
 
 // сравнить метрику в разных срезах
-function compareMetric(data, page, parameter, name, date) {
-  const resultSample = {};
+function compareMetric(data: MetricsSample[], page: string, parameter: string, name: string, date: string) {
+  const resultSample: { [key: string]: number[] } = {};
   const sampleData = data.filter((item) => item.page === page && item.name === name && item.date === date);
   let output = `Event ${name}\nComparison ${parameter}\nPage ${page}\n${date}:`;
 
@@ -82,7 +100,7 @@ function compareMetric(data, page, parameter, name, date) {
 }
 
 // рассчитать метрику за выбранный день
-function calcMetricByDate(data, page, name, date) {
+function calcMetricByDate(data: MetricsSample[], page: string, name: string, date: string) {
   let sampleData = data
     .filter((item) => item.page === page && item.name === name && item.date === date)
     .map((item) => item.value);
@@ -96,8 +114,10 @@ function calcMetricByDate(data, page, name, date) {
 fetch(`https://shri.yandex/hw/stat/data?counterId=${COUNTER_ID}`)
   .then((res) => res.json())
   .then((result) => {
+    const output = document.querySelector('#output');
     let data = prepareData(result);
-    document.querySelector('#output').textContent = `Metrics:
+    if (output) {
+      output.textContent = `Metrics:
 - domReady - time from the start of the page load to the end of the DOMContentLoaded event
 - modalOpenDelay - the difference between the expected time of the modal opening (500 ms)
   and the real time from clicking on the opening button to the completion of the opening animation
@@ -134,4 +154,5 @@ ${compareMetric(data, 'builds-list', 'gmt', 'modalOpenDelay', '2021-07-11')}
 ${compareMetric(data, 'settings', 'dpr', 'settingsSubmit', '2021-07-11')}
 
 ${compareMetric(data, 'settings', 'platform', 'settingsChange', '2021-07-11')}`;
+    }
   });

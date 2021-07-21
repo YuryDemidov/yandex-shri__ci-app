@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { getStateSettings, updateSettings } from '../../store/settingsSlice';
 import { Button } from '../Button/Button';
@@ -14,14 +13,28 @@ import { MESSAGES } from '../../assets/js/utils/constants/messages';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Settings.module.scss';
 
-export const SettingsPage = ({ loadData }) => {
+import { SettingsChangeData } from '../../api/types';
+
+declare global {
+  interface Window {
+    performance: {
+      measure: any;
+    };
+  }
+}
+
+interface SettingsPageProps {
+  loadData: () => void; // TODO
+}
+
+export const SettingsPage = ({ loadData }: SettingsPageProps): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const [message, setMessage] = useState({
     text: '',
     type: 'error',
   });
-  const [errorInputs, setErrorInputs] = useState([]);
+  const [errorInputs, setErrorInputs] = useState<string[]>([]);
   const [isDataChanged, setIsDataChanged] = useState(false);
   const [isRequestSent, setIsRequestSent] = useState(false);
   useStyles(styles);
@@ -46,12 +59,16 @@ export const SettingsPage = ({ loadData }) => {
         return;
       }
 
-      const requestBody = {};
+      const requestBody: Partial<SettingsChangeData> = {};
       const formData = new FormData(evt.target.form);
       let isFormValid = true;
       let hasRepoChanged = false;
 
-      for (let [key, value] of formData) {
+      for (const [key, value] of formData) {
+        if (typeof value !== 'string') {
+          continue;
+        }
+
         if ((key === 'repoName' || key === 'buildCommand') && !value.trim()) {
           setMessage({
             text: MESSAGES.ERROR.required,
@@ -74,7 +91,11 @@ export const SettingsPage = ({ loadData }) => {
           isFormValid = false;
         }
 
-        requestBody[key] = value;
+        if (key === 'buildCommand' || key === 'repoName' || key === 'mainBranch') {
+          requestBody[key] = value;
+        } else if (key === 'period') {
+          requestBody[key] = +value;
+        }
       }
 
       if (!isFormValid) {
@@ -106,7 +127,9 @@ export const SettingsPage = ({ loadData }) => {
           .duration.toFixed(3)
       );
 
+      // @ts-ignore
       dispatch(updateSettings(requestBody))
+        // @ts-ignore
         .then((data) => {
           if (data.error) {
             throw data.error;
@@ -116,7 +139,7 @@ export const SettingsPage = ({ loadData }) => {
             type: 'success',
           });
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           setMessage({
             text: error.message,
             type: 'error',
@@ -215,8 +238,4 @@ export const SettingsPage = ({ loadData }) => {
       </PageContent>
     </>
   );
-};
-
-SettingsPage.propTypes = {
-  loadData: PropTypes.func.isRequired,
 };

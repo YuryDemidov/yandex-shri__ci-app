@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { Button } from '../Button/Button';
 import { SvgIcon } from '../Svg/SvgIcon';
 
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './TextInput.module.scss';
+
+interface TextInputProps {
+  id: string;
+  className?: string;
+  name: string;
+  initialValue?: string;
+  type?: string;
+  labelTextBefore: string;
+  labelTextAfter?: string;
+  placeholder?: string;
+  isRequired?: boolean;
+  hasClearButton?: boolean;
+}
 
 export const TextInput = ({
   id,
@@ -18,12 +30,12 @@ export const TextInput = ({
   placeholder,
   isRequired,
   hasClearButton,
-}) => {
-  const [value, setValue] = useState(initialValue);
+}: TextInputProps): JSX.Element => {
+  const [value, setValue] = useState(`${initialValue}`);
 
   useStyles(styles);
 
-  const handleChange = (evt) => {
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setValue(evt.target.value);
   };
 
@@ -64,17 +76,4 @@ export const TextInput = ({
       )}
     </div>
   );
-};
-
-TextInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  type: PropTypes.string,
-  labelTextBefore: PropTypes.string.isRequired,
-  labelTextAfter: PropTypes.string,
-  placeholder: PropTypes.string,
-  isRequired: PropTypes.bool,
-  hasClearButton: PropTypes.bool,
 };

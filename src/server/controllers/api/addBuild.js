@@ -1,5 +1,5 @@
 import requestBuild from '../db/requestBuild';
-import isBuildSchemaValid from '../../validators/middlewares/isBuildSchemaValid';
+import isBuildSchemaValid from '../../validators/isBuildSchemaValid';
 import GitExecutor from '../../utils/gitExecutor';
 import { BadRequestApiError } from '../../validators/errors/ApiError';
 import { REPO_PATH } from '../../config';

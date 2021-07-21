@@ -37,3 +37,5 @@ declare module 'isomorphic-style-loader/StyleContext' {
 
   export { StyleContext as default, InsertCSS };
 }
+
+declare module '*.scss';
