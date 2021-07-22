@@ -14,6 +14,7 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Settings.module.scss';
 
 import { SettingsChangeData } from '../../api/types';
+import { PageProps } from '../../routes';
 
 declare global {
   interface Window {
@@ -23,11 +24,7 @@ declare global {
   }
 }
 
-interface SettingsPageProps {
-  loadData: () => void; // TODO
-}
-
-export const SettingsPage = ({ loadData }: SettingsPageProps): JSX.Element => {
+export const SettingsPage = ({ loadData }: PageProps): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const [message, setMessage] = useState({
@@ -127,9 +124,8 @@ export const SettingsPage = ({ loadData }: SettingsPageProps): JSX.Element => {
           .duration.toFixed(3)
       );
 
-      // @ts-ignore
-      dispatch(updateSettings(requestBody))
-        // @ts-ignore
+      dispatch(updateSettings(requestBody as SettingsChangeData))
+        // @ts-ignore TODO Move to store
         .then((data) => {
           if (data.error) {
             throw data.error;
@@ -213,7 +209,7 @@ export const SettingsPage = ({ loadData }: SettingsPageProps): JSX.Element => {
             <TextInput
               id="period"
               name="period"
-              initialValue={period}
+              initialValue={`${period}`}
               type="number"
               className={`text-input_inline${errorInputs.includes('period') ? ' text-input_invalid' : ''}`}
               placeholder="10"

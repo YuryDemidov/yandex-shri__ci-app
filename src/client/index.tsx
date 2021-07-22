@@ -5,11 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import StyleContext, { InsertCSS } from 'isomorphic-style-loader/StyleContext';
 
 import { App } from './components/App/App';
-import { createStore } from './store';
+import { createStore, RootState } from './store';
 
 declare global {
   interface Window {
-    __SERVER_STATE: JSON;
+    __SERVER_STATE: RootState;
   }
 }
 
@@ -18,7 +18,7 @@ const insertCss: InsertCSS = (...styles) => {
   return () => removeCss.forEach((dispose) => dispose());
 };
 
-const store = createStore({
+export const store = createStore({
   preloadedState: window.__SERVER_STATE,
   queryParams: Object.fromEntries(new URLSearchParams(window.location.search).entries()),
 });

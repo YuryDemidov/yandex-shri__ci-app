@@ -39,3 +39,5 @@ declare module 'isomorphic-style-loader/StyleContext' {
 }
 
 declare module '*.scss';
+declare module '*.svg';
+declare module '*.png';

@@ -15,7 +15,7 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import normalizeStyles from './normalize.scss';
 import styles from './App.module.scss';
 
-export const App = (): JSX.Element => {
+export const App: React.FC = (): JSX.Element => {
   const { isOpened: isModalOpened } = useSelector(getModalState);
   const modal = isModalOpened ? <NewBuildModal /> : null;
   useStyles(styles);

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Convert from 'ansi-to-html';
 
-import { getStateBuildData } from '../../store/buildDataSlice';
+import { BuildDataState, getStateBuildData } from '../../store/buildDataSlice';
 import { getStateSettings } from '../../store/settingsSlice';
 import { BuildCard } from '../BuildCard/BuildCard';
 import { HeaderButtonsGroup } from '../Header/HeaderButtonsGroup';
@@ -16,21 +15,16 @@ import { Preloader } from '../Preloader/Preloader';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildLogs.module.scss';
 
-interface BuildLogsPageProps {
-  // TODO
-  loadData: () => void;
-}
+import { PageProps } from '../../routes';
 
-export const BuildLogsPage = ({ loadData }: BuildLogsPageProps): JSX.Element => {
+export const BuildLogsPage = ({ loadData }: PageProps): JSX.Element => {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const { id } = useParams();
-  const buildData = useSelector(getStateBuildData);
-  const { repoName } = useSelector(getStateSettings);
+  const { id } = useParams<{ [key: string]: string }>();
+  const buildData = useSelector(getStateBuildData) as BuildDataState;
+  const { repoName } = useSelector(getStateSettings)!;
   useStyles(styles);
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(loadData({ id }));
     window.scrollTo(0, 0);
   }, [dispatch, loadData, id]);
@@ -56,8 +50,4 @@ export const BuildLogsPage = ({ loadData }: BuildLogsPageProps): JSX.Element => 
       </PageContent>
     </>
   );
-};
-
-BuildLogsPage.propTypes = {
-  loadData: PropTypes.func.isRequired,
 };

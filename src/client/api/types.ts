@@ -1,3 +1,5 @@
+import { History } from 'history';
+
 export interface DbBuildModel {
   id: string;
   configurationId: string;
@@ -23,7 +25,14 @@ export type BuildStatus = 'Waiting' | 'InProgress' | 'Success' | 'Fail' | 'Cance
 
 export type BuildLog = string;
 
-export type BuildRequestData = Pick<DbBuildModel, 'commitMessage' | 'commitHash' | 'branchName' | 'authorName'>;
+export type BuildRequestData = {
+  commitHash: string;
+  history: History;
+  onError: (error: Error) => void;
+  onSuccess?: () => void;
+};
+
+export type BuildParamsRequestData = Pick<DbBuildModel, 'commitMessage' | 'commitHash' | 'branchName' | 'authorName'>;
 
 export type BuildStartData = {
   id: string;
@@ -40,14 +49,6 @@ export type BuildFinishData = {
 export type BuildListParams = {
   limit?: number;
   offset?: number;
-};
-
-export type BuildDetailsParams = {
-  buildId: string;
-};
-
-export type BuildLogParams = {
-  buildId: string;
 };
 
 export type BuildCancelData = Pick<DbBuildModel, 'id'>;

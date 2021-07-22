@@ -22,7 +22,6 @@ export const NewBuildModal = (): JSX.Element => {
   }, [dispatch, closeModal]);
 
   const showError = (text: string | Error) => {
-    // @ts-ignore
     dispatch(showModalError(text));
   };
 
@@ -37,7 +36,6 @@ export const NewBuildModal = (): JSX.Element => {
       }
 
       dispatch(
-        // @ts-ignore
         requestBuild({
           commitHash,
           history,

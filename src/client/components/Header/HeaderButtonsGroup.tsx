@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getStateBuildData } from '../../store/buildDataSlice';
+import { BuildDataState, getStateBuildData } from '../../store/buildDataSlice';
 import { requestBuild } from '../../store/buildsSlice';
 import { openModal } from '../../store/modalSlice';
 import { Button } from '../Button/Button';
@@ -17,7 +17,7 @@ interface HeaderButtonsGroupProps {
 export const HeaderButtonsGroup = ({ buttonsSet }: HeaderButtonsGroupProps): JSX.Element => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const buildData = useSelector(getStateBuildData);
+  const buildData = useSelector(getStateBuildData) as BuildDataState;
   const modalAnimationTime = 500; // ms
 
   const countPerformance = () => {
@@ -43,7 +43,6 @@ export const HeaderButtonsGroup = ({ buttonsSet }: HeaderButtonsGroupProps): JSX
 
   const runRebuild = useCallback(() => {
     dispatch(
-      // @ts-ignore
       requestBuild({ commitHash: buildData.details.commitHash, history, onError: (error) => console.log(error) })
     );
   }, [dispatch, history, requestBuild, buildData]);

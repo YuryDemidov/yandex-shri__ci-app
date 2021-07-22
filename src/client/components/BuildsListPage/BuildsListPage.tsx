@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { getStateBuilds } from '../../store/buildsSlice';
 import { getStateSettings } from '../../store/settingsSlice';
@@ -17,13 +16,9 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './BuildsList.module.scss';
 
 import { DbBuildModel } from '../../api/types';
+import { PageProps } from '../../routes';
 
-interface BuildsListPageProps {
-  // ToDO
-  loadData: () => void;
-}
-
-export const BuildsListPage = ({ loadData }: BuildsListPageProps): JSX.Element => {
+export const BuildsListPage = ({ loadData }: PageProps): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(getStateSettings);
   const builds = useSelector(getStateBuilds);
@@ -72,8 +67,4 @@ export const BuildsListPage = ({ loadData }: BuildsListPageProps): JSX.Element =
       </PageContent>
     </>
   );
-};
-
-BuildsListPage.propTypes = {
-  loadData: PropTypes.func.isRequired,
 };
